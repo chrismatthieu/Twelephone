@@ -1,0 +1,97 @@
+<% v = @verses.first %>
+
+<% @nextbook = v.book_id + 1 rescue 1%>
+<% @prevbook = v.book_id - 1 rescue 1%>
+<br/>
+
+<% @books ||= Verse.find(:all, :conditions => ["bible_id = ?", session[:bible]], :order=>"book_id", :select => "DISTINCT book_name, book_id") %>
+<% @lastbook = @books[-1].book_name %>
+
+<div id="tipbar">
+	<!input type="text" id="highcolor">
+	<div id="demo-tips">
+	   <div class="structure">&nbsp;</div>
+	</div>
+	<script>
+	// http://craigsworks.com/projects/qtip2/demos/#tips
+	var at = [
+	      'bottom left', 'bottom right', 'bottom center',
+	      'top left', 'top right', 'top center',
+	      'left center', 'left top', 'left bottom',
+	      'right center', 'right top', 'right bottom', 'center'
+	   ],
+	   my = [
+	      'top left', 'top right', 'top center',
+	      'bottom left', 'bottom right', 'bottom center',
+	      'right center', 'right top', 'right bottom',
+	      'left center', 'left top', 'left bottom', 'center'
+	   ],
+	   styles = [
+	      'red', 'blue', 'dark', 'light', 'green', 'jtools', 'plain', 'youtube', 'cluetip', 'tipsy', 'tipped'
+	   ];
+
+	// Create the tooltips only on document load
+	$(document).ready(function()
+	{
+	      $('.structure')
+	         /*
+	          * Lets delete the qTip data from our target element so we can apply multiple tooltips.
+	          * Since the data is also stored on the tooltip element itself this isn't a problem!
+	          * 
+	          * Check here for more details on this: http://craigsworks.com/projects/qtip2/tutorials/advanced/#multi
+	          */
+	         .removeData('qtip') 
+	         .qtip({
+	            content: {
+	               text: 'You can highlight verses<br/>and add notes by logging in<br/>and clicking on the verse '
+	            },
+	            position: {
+	               my: 'right center', // Use the corner...
+	               at: 'left center' // ...and opposite corner
+	            },
+	            show: {
+	               event: false, // Don't specify a show event...
+	               ready: true // ... but show the tooltip when ready
+	            },
+	            hide: false, // Don't specify a hide event either!
+	            style: {
+	               classes: 'ui-tooltip-shadow ui-tooltip-jtools'
+	            }
+	         });
+	});
+	</script>
+</div>
+<div id="notebar">
+	<% if current_user %>
+		<%= render :partial => "comments/comment" %>
+	<% end %>
+</div>
+
+
+<div id="bookform">
+<%= form_tag "/jump", :method => "get" do %>
+
+
+	<%= select_tag(:book, options_from_collection_for_select(@books, 'book_name', 'book_name', v.book_name)) rescue "" %>
+	<%= submit_tag('Go')%>
+ 
+	<% if !v.nil? %>
+		<% if  v.book_id > 1 %>
+			<%= link_to raw('&larr; Previous Book'), '/' + @prevbook.to_s + '/1'  %>
+		<% end %>
+		<% if @lastbook != v.book_name %>
+			<%= link_to raw('Next Book &rarr; '), '/' + @nextbook.to_s + '/1' %>
+		<% end %>
+	<% end %>
+	
+<% end %>
+</div>
+<h1><%= v.book_name rescue ""%></h1>
+
+<div id="pagecontent">
+	<%= render :partial => "verse", :collection => @verses %>
+</div>
+
+<br />
+<p><center><%= will_paginate @verses %></center></p>
+<br/>

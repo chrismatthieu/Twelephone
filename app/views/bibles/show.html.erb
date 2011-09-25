@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @bible.name %>
+</p>
+
+<p>
+  <b>Acronym:</b>
+  <%= @bible.acronym %>
+</p>
+
+
+<%= link_to 'Edit', edit_bible_path(@bible) %> |
+<%= link_to 'Back', bibles_path %>

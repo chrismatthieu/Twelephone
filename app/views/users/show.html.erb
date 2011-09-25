@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<h1>
+<%= gravatar_image_tag @user.email, :class => "gravatar" rescue ""%>
+<%= @user.username %>
+</h1>
+
+<!-- <p>
+  <b>Twitter:</b>
+  <%= @user.twitter %>
+</p>
+
+<p>
+  <b>Facebook:</b>
+  <%= @user.facebook %>
+</p> -->
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> | 
+<%= link_to 'Back', users_path %>

@@ -1,0 +1,479 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require_self
+ *= require_tree . 
+*/
+/*Global Reset*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+:focus {
+	outline: 0;
+}
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+
+/* Global settings */
+body {
+	font: 59.5%/1.4 "ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2",Cambria,Georgia, Times, serif;
+	background: #fff;
+	text-align: center;
+}
+
+html, body {
+	height: 100%;
+}
+
+#footer, .push {
+	height: 4em;
+}
+
+
+/* layout */
+#wrapper {
+	font-size:1.2em;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -4em;	
+}
+
+
+#message {
+    height:24px;
+    padding: 8px 5px 2px;
+    margin-top: -10px;
+    font-size:1em;
+    height:24px;
+}
+#message2 {
+    height:24px;
+    padding: 2px 5px;
+    font-size:1em;
+    height:24px;
+}
+
+
+.error {
+    color: red;
+}
+.success{
+    color: green;
+}
+
+
+/* page */
+.page {
+    padding: 0 90px 0 90px;
+    width: 780px;
+	text-align: left;
+	background: url(/assets/pagetop.gif) 90px 0 no-repeat;
+}
+.page button {
+	font-family: Helvetica,Arial,sans-serif;
+}
+.page h1 {
+	font-family: "ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2" Georgia,serif;
+	-webkit-transform: rotate(-0.0000000001deg);
+	letter-spacing:-1px;
+	font-weight: 500;
+	font-style:italic;
+	padding-top:25px;
+    font-size:45px;
+    margin-bottom:25px;
+    text-align:center;
+	color: #727272;
+}
+.page h1 input{
+	font-family: Georgia,serif;
+	font-weight: normal;
+	font-size: 0.8em;
+	width: 90%;
+	border: 1px solid #ccc;
+	color: #727272;
+}
+.page h1 button{
+	background: #FAD753;
+	border: 1px solid #E5D633;
+	color: #8D7E43;
+	display: inline-block;
+	font-size: 0.4em;
+	margin-right: 0.5em;
+}
+.page h3 {
+	font-family: Georgia,serif;
+	font-weight: normal;
+    font-size:14px;
+	padding-top: 12px;
+    color: #9ab7c7;
+	text-align:right;
+}
+.page h3 button{
+	background: #FAD753;
+	border: 1px solid #E5D633;
+	color: #8D7E43;
+	display: inline-block;
+	margin-right: 0.5em;
+}
+.page h3 input{
+	font-family: Georgia,serif;
+	font-weight: normal;
+	margin-top: 12px;	
+	width: 50%;
+	color: #6aa5ca;
+	border: 1px solid #ccc;
+}
+
+#pagecontent {
+    font-size:1.4em;
+    line-height: 26px;
+    letter-spacing:0.01em;
+	word-spacing:2px;
+	height: auto !important;
+	min-height: 300px;
+	height: 300px;
+	color: #333333;
+	z-index:110;
+}
+#pagecontent p {
+    margin-bottom:1em;
+}
+#pagecontent h1,#pagecontent h2, #pagecontent h3, #pagecontent h4 {
+	color: #020202;
+	letter-spacing:0.045em;
+	font-family: "ff-meta-web-pro-1","ff-meta-web-pro-2",Helvetica,Arial,sans-serif;
+	font-weight:600;
+	text-align:left;
+}
+#pagecontent h1 {
+	font-size:24px;
+	padding: 18px 0;
+}
+#pagecontent h2 {
+	font-size:20px;
+	padding: 16px 0;
+}
+#pagecontent h3 {
+	font-size:18px;
+	padding: 10px 0;
+}
+#pagecontent h4 {
+	font-size:16px;
+	padding: 12px 0;
+}
+#pagecontent textarea{
+	width: 100%;
+	height: 200px;
+	padding: 12px;
+	font-family: georgia,"Times New Roman", serif;
+	border: 1px dashed #cbcbcb;
+    font-size:16px;
+    line-height: 26px;
+    letter-spacing:0.01em;
+	color: #727272;
+}
+#pagecontent img {
+
+	/*float: right;*/
+	padding: 10px;
+	display:block;
+	margin: 0 auto;
+}
+
+#pagecontent a img {
+
+}
+.imagefull {
+	width: auto !important;
+	max-width: 760px;
+	width: 760px;		
+}
+.imageleft {
+	float: left;
+}
+.imageright {
+	float: right;
+}
+#pagecontent button{
+	font-family: "lucida grande", sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	color: #fff;
+	background: #3b88d8;
+	background: -moz-linear-gradient(0% 100% 90deg, #377ad0, #52a8e8);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, 
+	from(#52a8e8), to(#377ad0));
+	border-top: 1px solid #4081af;
+	border-right: 1px solid #2e69a3;
+	border-bottom: 1px solid #20559a;
+	border-left: 1px solid #2e69a3;
+	-moz-border-radius: 16px;
+	-webkit-border-radius: 16px;
+	border-radius: 16px;
+	-moz-box-shadow: inset 0 1px 0 0 #72b9eb, 0 1px 2px 0 #b3b3b3;
+	-webkit-box-shadow: inset 0 1px 0 0 #72b9eb, 0 1px 2px 0 #b3b3b3;
+	line-height: 1;
+	text-align: center;
+	text-shadow: 0 -1px 1px #3275bc;
+	padding-top: 3px;
+	padding-right: 7px;
+	padding-bottom: 5px;
+	padding-left: 7px;
+}
+
+#pagecontent button:hover {
+	background: #2a81d7;
+  background: -moz-linear-gradient(0% 100% 90deg, #206bcb, #3e9ee5);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, 
+  from(#3e9ee5), to(#206bcb));
+  border-top: 1px solid #2a73a6;
+  border-right: 1px solid #165899;
+  border-bottom: 1px solid #07428f;
+  border-left: 1px solid #165899;
+  -moz-box-shadow: inset 0 1px 0 0 #62b1e9;
+  -webkit-box-shadow: inset 0 1px 0 0 #62b1e9;
+  cursor: pointer;
+  text-shadow: 0 -1px 1px #1d62ab;
+}
+#pagecontent .youtube-player {
+	margin-left: 70px;
+}
+
+#pagecontent a {
+	text-decoration: none;
+	color: #333333;
+}
+
+
+a img {
+  border: 0; 
+}
+a {
+  color: #92BD54;
+ /* font-weight: bold;*/ 
+}
+
+a:hover {
+  color: #F9BB3B;
+/*  font-weight: bold; */
+  background-color: #FFFFCC; 
+}
+.charge {
+	position: relative;
+	bottom: 0.5em;
+	color: #92BD54;
+	font-size: 0.5em;
+}
+
+#leftbar {
+	position:absolute;
+	left:5px;
+	margin-top: 15px;	
+}
+
+
+#drop-area  {
+left:0;
+position:absolute;
+top:0;
+width:100%;
+z-index:0;
+}
+
+#slider {
+position: absolute;
+width: 100%;
+/*height: 77px; */
+height: 127px; 
+/*top:-50px;*/
+top:-100px;
+}
+
+#topstuff {
+	position:relative;
+/*	right:5px;*/
+/*	margin-top:20px;*/
+}
+#toplogo {
+	position:absolute;
+/*	right:5px;*/
+	margin-top:20px;
+}
+
+#slider img {
+position:absolute;
+border: 0;
+top:-27px;
+}
+#sliderContent {
+position: absolute;
+background:url(/assets/bg100.jpg);
+width: 100%;
+/*height: 50px;*/
+height: 100px;
+}
+#openCloseWrap {
+position:absolute;
+right:50px;
+bottom:0px;
+}
+
+.search{
+/*float:right;*/
+position:relative;
+/*left:-50%;*/
+}
+
+.header-top-search-box {
+position:relative;
+/*left:80%;*/
+}
+
+.header-search-button {
+position:relative;
+/*left:80%;*/
+}
+
+.search-text {
+position:relative;
+/*left:75%;*/
+/*font-size: .7em; */
+font:16px/1.2 Century Gothic;
+padding:0; -moz-border-radius: 4px; -webkit-border-radius: 4px;
+color: white;
+}
+
+.header-search-button {font-size: 2.2em; padding:0; -moz-border-radius: 4px; -webkit-border-radius: 4px;}
+.header-top-search-box{
+	width: 350px; 
+	vertical-align: bottom; 
+	border-style:solid; 
+	border-width:2px; 
+	border-color:#6e6e6e; 
+	padding:0px; 
+	font-size: 2.2em; 
+	letter-spacing: -1px; 
+}
+
+.home-search-button {font-size: 2.6em; padding:0; -moz-border-radius: 4px; -webkit-border-radius: 4px;}
+.home-top-search-box{
+	width: 600px; 
+	vertical-align: bottom; 
+	border-style:solid; 
+	border-width:2px; 
+	border-color:#6e6e6e; 
+	padding:0px; 
+	font-size: 2.6em; 
+	letter-spacing: -1px; 
+}
+.pagination {
+  padding: 3px;
+  margin: 3px;
+}
+.pagination a {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #F9BB3B;
+  text-decoration: none;
+  color: #92BD54;
+}
+.pagination a:hover, .pagination a:active {
+  border: 1px solid #92BD54;
+  color: #000;
+}
+.pagination span.current {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #92BD54;
+  font-weight: bold;
+  background-color: #92BD54;
+  color: #FFF;
+}
+.pagination span.disabled {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #eee;
+  color: #ddd;
+}
+#bookform input:focus, select:focus, textarea:focus {background: none repeat scroll 0 0 #FFFF99; line-height:16px; font-size: 16px;}
+#bookform input, select, textarea {line-height:16px; font-size: 16px; }
+
+#bookform p input, select{
+	padding:5px 10px;
+	color:#666666;
+	background-color:#F7F7F7;
+	border:1px solid #CCCCCC;
+	line-height:16px; 
+	font-size: 16px;
+	}
+#generalform input:focus, select:focus, textarea:focus {background: none repeat scroll 0 0 #FFFF99; line-height:21px; font-size: 21px;}
+#generalform input, select, textarea {line-height:21px; font-size: 21px; }
+
+#generalform p input, select{
+	padding:5px 10px;
+	color:#666666;
+	background-color:#F7F7F7;
+	border:1px solid #CCCCCC;
+	line-height:21px; 
+	font-size: 21px;
+	}
+
+#tipbar {
+	position:absolute;
+	left:200px;
+	margin-top: 125px;	
+}
+
+#notebar {
+	position:absolute;
+	right:5px;
+	margin-top: 100px;	
+	width:200px;
+}

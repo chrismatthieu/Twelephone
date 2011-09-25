@@ -1,0 +1,21 @@
+<% content_for :title do %>
+	<%= "#{@bible.acronym} - #{session[:searchterm]}" %>
+<% end %>
+
+<h1><%= session[:searchterm] %> referenced <%= @versecount %> times</h1><br/>
+
+<div id="pagecontent">
+	<%= render :partial => "verse", :collection => @verses %>
+</div>
+
+
+
+
+
+<%# if params[:commit] != "Search" %>
+	<%# render :partial => "gotoform", :locals => { :bible => @bible } %>
+<%# end %>
+
+<br />
+<p><center><%= will_paginate @verses %></center></p>
+<br />

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gospelr</title>
+  <meta name="keywords" content="gospelr, microblogging, bible, microblogs, gospel, jesus christ, church, twitter, online bible, bible online" />
+  <meta name="description" content="Bible Studying and Microblogging the Good News." />
+
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+
+  <link type="text/css" rel="stylesheet" href="/qtip/jquery.qtip.css" />
+  <script type="text/javascript" src="/qtip/jquery.qtip.min.js"></script>
+
+	<%= yield :head %>
+	<%= yield :stylers %>
+
+</head>
+<body>
+	<div id="leftbar">
+		<p align="left">
+		
+		<% if @current_user %>
+			<%= gravatar_image_tag @current_user.email, :class => "gravatar", :width => "15" rescue ""%> <%= @current_user.username.capitalize %> | 
+
+			<%= link_to 'home', "/" %> |
+			<% if @current_user %>
+				<%= link_to 'profile', user_path(@current_user) %> |
+			<% end %>
+
+			<%= link_to 'logout', '/logout' %>
+
+		<% else %>
+			<%= link_to 'home', "/" %> |
+			<%= link_to 'register', new_user_path %> | 
+			<%= link_to 'login', '/login' %>
+		<% end %>
+		
+		</p>
+	</div>
+	
+	<div id="wrapper" class="page">
+
+<%= yield %>
+
+	</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#drop").mouseenter( function() {
+		if($("#slider").css('top')=='-100px'){
+			$("#slider").animate({ 
+				top: "0px"
+				}, 500 );
+			$(this).fadeTo("slow",1)
+		}
+	});  
+	$("#sliderContent").mouseleave( function() {
+			$("#slider").animate({ 
+				top: "-100px"
+				}, 500 );
+			$("#drop").fadeTo("slow",0.7)
+	});
+	$("#drop").fadeTo("slow",0.7)
+});
+</script>
+
+
+	<div id="slider">
+		<div id="sliderContent">
+			<div id="topstuff">
+				<!-- <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="gospelr" >Tweet</a>
+				<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+				<iframe src="http://www.facebook.com/plugins/like.php?app_id=214563245242191&amp;href=http%3A%2F%2Fgospelr.com&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe> -->
+				<div id="toplogo">
+					<a href="/"><img src="/assets/gospelr.png" width="250"></a>
+				</div>
+				
+				<br/>
+				<center>
+					
+				<%= form_for :search, :url=>"/search", :html => {:class => 'search', :id => 'search'}, :method => "get" do |f| %>
+					<% 
+					if @searchterm.nil? 
+						@searchterm = "Genesis 1:1"
+					end
+					%>
+					<%= f.text_field "searchtext", :value => @searchterm, :class => "header-top-search-box" %><%# f.hidden_field :bible_id, :value => bible.id %>
+					<%#text_field_with_auto_complete :text, :verse, :autocomplete => "off" %>
+					<%# submit_tag "Search"%>
+					<input type="submit" value="Search" name="commit" id="search-button" class="header-search-button"><br/>
+					<div class="search-text">Enter a verse or keywords (<a href="/search/John 3%3A16">John 3:16</a>, <a href="/search/marriage">marriage</a>, <a href="/search/Holy Spirit">Holy Spirit</a>)
+						| <%= link_to 'Genesis', "/genesis/1" %>
+						<% if false #logged_in? %>
+							| <%= link_to "Goto Bookmark", "/gotobookmark" %>
+						<% end %>
+					</div>
+				<% end %>
+				</center>
+			</div>
+		</div>
+		<div id="openCloseWrap">
+				<img id="drop" src="/assets/dropdownbar-ribbon.png" alt="open" />
+			</a>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+	try {
+	var pageTracker = _gat._getTracker("UA-2483685-13");
+	pageTracker._trackPageview();
+	} catch(err) {}</script>
+	
+</body>
+</html>

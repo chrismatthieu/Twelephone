@@ -1,0 +1,60 @@
+<% if params[:action] == "search" %>
+	<a href="/<%=verse.book_name.gsub(" ", "")%>/<%=verse.chapter%>/<%=verse.number%>"><%= verse.book_name + ' ' + verse.chapter.to_s + ':' + verse.number.to_s %> </a>
+	<%= verse.text %>
+
+	<br/><br/>
+<% else %>	
+	<!-- <span class="charge"><%= verse.chapter.to_s + ':' + verse.number.to_s %> </span> -->
+
+	<% highlight = Highlight.find(:first, :conditions=>['user_id = ? and verse_id = ?', current_user.id, verse.id]) rescue nil%>
+	<%# highlight = verse.highlight %>
+	
+	<% if !highlight.nil? %>
+		<span id="highlight_<%= verse.id%>" style="background-color:<%=highlight.color%>">
+	<% else %>
+		<span id="highlight_<%= verse.id%>">
+	<% end %>
+	
+	<% if current_user %>
+		<%= link_to_function(raw('<span class="charge">') + verse.chapter.to_s + ':' + verse.number.to_s + raw('</span> ') + verse.text, "$('#commentsdisp_#{verse.id}').slideToggle('slow', function(){});" ) %>
+	<% else %>
+		<%= raw('<span class="charge">') + verse.chapter.to_s + ':' + verse.number.to_s + raw('</span> ') + verse.text%>
+	<% end %>
+	</span>
+	<div id="commentsdisp_<%= verse.id%>" style="display:none;"><br/>
+		<%= form_for :highlight, :url=>{:controller=>"verses", :action=>"highlight", :id=>verse.id, :color=>'yellow' }, :remote => true do |f| %>
+			<%# hidden_field_tag "color", $('#highcolor').val() %>
+			<%= image_submit_tag("/assets/highlighter-yellow-icon.png", :width=>"15", :align=>"left", :title=>"yellow highlighter") %>
+		<% end %>
+		<%= form_for :highlight, :url=>{:controller=>"verses", :action=>"highlight", :id=>verse.id, :color=>'lightgreen' }, :remote => true do |f| %>
+			<%= image_submit_tag("/assets/highlighter-green-icon.png", :width=>"15", :align=>"left", :title=>"green highlighter") %>
+		<% end %>
+		<%= form_for :highlight, :url=>{:controller=>"verses", :action=>"highlight", :id=>verse.id, :color=>'lightblue' }, :remote => true do |f| %>
+			<%= image_submit_tag("/assets/highlighter-blue-icon.png", :width=>"15", :align=>"left", :title=>"blue highlighter") %>
+		<% end %>
+		<%= form_for :highlight, :url=>{:controller=>"verses", :action=>"highlight", :id=>verse.id, :color=>'lightpink' }, :remote => true do |f| %>
+			<%= image_submit_tag("/assets/highlighter-pink-icon.png", :width=>"15", :align=>"left", :title=>"pink highlighter") %>
+		<% end %>
+		<%= form_for :highlight, :url=>{:controller=>"verses", :action=>"highlight", :id=>verse.id, :color=>'x' }, :remote => true do |f| %>
+			<%= image_submit_tag("/assets/x.png", :width=>"15", :align=>"left", :title=>"clear highlight") %> 
+		<% end %>
+		
+		<br/>
+		
+		<div id="generalform">
+		<%= form_for :comment, :url=>{:controller=>"comments", :action=>"create", :id=>verse.id }, :remote => true do |f| %>
+			<%= f.text_area "comment", :rows=>3, :cols=>80 %>
+			<br>
+			<p><%= submit_tag "Add Note"%></p>
+		<% end %>		
+		</div>
+	</div>
+	
+	<!-- create new paragraph every few verses -->
+	<% if verse.id % 5 == 0 %>
+		<br/><br/>
+	<% end %>
+<% end %>
+
+
+

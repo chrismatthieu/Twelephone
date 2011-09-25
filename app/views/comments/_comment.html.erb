@@ -1,0 +1,10 @@
+<% @verses.each do |verse| %>
+	<% comments = Comment.find(:all, :conditions=>['user_id = ? and verse_id = ?', current_user.id, verse.id]) rescue nil%>
+	<% comments.each do |comment| %>
+		<div id="comment_<%=comment.id.to_s %>"><span class="charge">
+			<%=verse.chapter.to_s + ":" + verse.number.to_s rescue "" %></span> <%= comment.comment rescue ""%>
+			<%= link_to image_tag("/assets/x.png", :width=>"15", :title=>"delete comment"), comment, confirm: 'Are you sure?', method: :delete, :remote => true %>
+		</div>
+		
+	<% end %>
+<% end %>

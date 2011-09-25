@@ -81,11 +81,11 @@ $(document).ready(function() {
 					
 				<%= form_for :search, :url=>"/search", :html => {:class => 'search', :id => 'search'}, :method => "get" do |f| %>
 					<% 
-					if @searchterm.nil? 
-						@searchterm = "Genesis 1:1"
+					if session[:searchterm].nil? 
+						session[:searchterm] = "Genesis 1:1"
 					end
 					%>
-					<%= f.text_field "searchtext", :value => @searchterm, :class => "header-top-search-box" %><%# f.hidden_field :bible_id, :value => bible.id %>
+					<%= f.text_field "searchtext", :value => session[:searchterm], :class => "header-top-search-box" %><%# f.hidden_field :bible_id, :value => bible.id %>
 					<%#text_field_with_auto_complete :text, :verse, :autocomplete => "off" %>
 					<%# submit_tag "Search"%>
 					<input type="submit" value="Search" name="commit" id="search-button" class="header-search-button"><br/>

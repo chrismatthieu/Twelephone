@@ -1,0 +1,22 @@
+table.treeTable span.folder {
+  float: left;
+}
+
+table.treeTable span.expander {
+  float: left;
+  height: 20px;
+}
+
+span.on_the_spot_in_tree_editing {
+  padding: 0.2em 0.4em;
+  margin-left: -0.2em;
+/*  float: left;*/
+}
+
+span.on_the_spot_in_tree_editing {
+  min-width: 20px;
+}
+
+span.on_the_spot_in_tree_editing form input {
+  min-width: 50px;
+}

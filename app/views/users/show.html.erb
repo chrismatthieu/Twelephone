@@ -15,6 +15,85 @@
   <%= @user.facebook %>
 </p> -->
 
+<div id="pagecontent">
+
+<% @activities.each do |activity| %>
+
+	
+	<% if !activity.color.nil? %>
+		<span id="highlight_<%= activity.id%>" style="background-color:<%=activity.color%>">
+	<% else %>
+		<span id="highlight_<%= activity.id%>">
+	<% end %>
+
+	<a href="/<%=activity.verse.book_name.gsub(" ", "")%>/<%=activity.verse.chapter%>/<%=activity.verse.number%>">
+	<%= activity.verse.book_name + ' ' +activity.verse.chapter.to_s + ':' + activity.verse.number.to_s %>
+	<%= activity.verse.text%></a>
+	</span>
+	
+	<% if activity.comment %>
+	
+	<div id="profilecomment" class="comment_<%=activity.id%>">&nbsp;</div>
+	<script>
+	// http://craigsworks.com/projects/qtip2/demos/#tips
+	var at = [
+	      'bottom left', 'bottom right', 'bottom center',
+	      'top left', 'top right', 'top center',
+	      'left center', 'left top', 'left bottom',
+	      'right center', 'right top', 'right bottom', 'center'
+	   ],
+	   my = [
+	      'top left', 'top right', 'top center',
+	      'bottom left', 'bottom right', 'bottom center',
+	      'right center', 'right top', 'right bottom',
+	      'left center', 'left top', 'left bottom', 'center'
+	   ],
+	   styles = [
+	      'red', 'blue', 'dark', 'light', 'green', 'jtools', 'plain', 'youtube', 'cluetip', 'tipsy', 'tipped'
+	   ];
+
+	// Create the tooltips only on document load
+	$(document).ready(function()
+	{
+	      $('.comment_<%=activity.id%>')
+	         /*
+	          * Lets delete the qTip data from our target element so we can apply multiple tooltips.
+	          * Since the data is also stored on the tooltip element itself this isn't a problem!
+	          * 
+	          * Check here for more details on this: http://craigsworks.com/projects/qtip2/tutorials/advanced/#multi
+	          */
+	         .removeData('qtip') 
+	         .qtip({
+	            content: {
+	               text: '<%=activity.comment%>'
+	            },
+	            position: {
+	               my: 'top center', // Use the corner...
+	               at: 'center' // ...and opposite corner
+	            },
+	            show: {
+	               event: false, // Don't specify a show event...
+	               ready: true // ... but show the tooltip when ready
+	            },
+	            hide: false, // Don't specify a hide event either!
+	            style:{ 
+	               	classes: 'ui-tooltip-shadow ui-tooltip-cream',
+					width: '800px'
+            	}
+	         });
+	});
+	</script>
+	<% end %>
+	<br/><br/>
+
+<% end %>
+
+</div>
+
+<br />
+<p><center><%= will_paginate @activities %></center></p>
+<br />
 
 <%= link_to 'Edit', edit_user_path(@user) %> | 
 <%= link_to 'Back', users_path %>
+<br/><br/>

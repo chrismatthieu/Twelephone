@@ -18,7 +18,9 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
-
+    # @activities = User.comments.paginate :page => params[:page], :per_page => 3
+    @activities = Comment.paginate :page => params[:page], :conditions => ['user_id = ?', @user.id], :order => 'created_at DESC'
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }

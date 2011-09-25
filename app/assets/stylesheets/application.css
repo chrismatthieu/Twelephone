@@ -477,3 +477,9 @@ color: white;
 	margin-top: 100px;	
 	width:200px;
 }
+#profilecomment {
+	width:100%;
+}
+
+*= require jquery.treeTable
+*= require on_the_spot_in_tree

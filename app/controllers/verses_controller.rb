@@ -214,9 +214,9 @@ class VersesController < ApplicationController
   
   def highlight
     
-    @highlight = Highlight.find(:first, :conditions=>['user_id = ? and verse_id = ?', current_user.id, params["id"]])
+    @highlight = Comment.find(:first, :conditions=>['user_id = ? and verse_id = ? and color IS NOT NULL', current_user.id, params["id"]])
     if !@highlight 
-      @highlight = Highlight.new
+      @highlight = Comment.new
       @highlight.user_id = current_user.id
       @highlight.verse_id = params["id"]
     end

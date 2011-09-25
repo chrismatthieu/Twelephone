@@ -7,7 +7,13 @@ Gospelr3::Application.routes.draw do
   resources :verses
   resources :bibles
   resources :sessions
-  resources :comments
+  # resources :comments
+  
+  resources :comments do
+    collection do
+      put :update_attribute_on_the_spot_in_tree
+    end
+  end
 
   match 'search/:id' => 'verses#search'
   match 'search' => 'verses#search'

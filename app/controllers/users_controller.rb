@@ -42,7 +42,7 @@ class UsersController < ApplicationController
      
      
      @activities = Comment.paginate :page => params[:page], :per_page => 10, :select => "comments.user_id, comments.verse_id, comments.comment, comments.color",  
-     :conditions => ["(follows.user_id = #{@current_user.id})"],
+     :conditions => ["follows.user_id = ? or comments.user_id = ?", @current_user.id, @current_user.id],
      :joins => "left outer join follows on comments.user_id = follows.follow_id or comments.user_id = #{@current_user.id}",
      :order => 'comments.updated_at DESC'
           

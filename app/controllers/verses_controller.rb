@@ -248,6 +248,7 @@ class VersesController < ApplicationController
     
     respond_to do |format|  
       format.js { render :action => 'highlight', :content_type => 'text/javascript'}
+      format.json { render :action => 'highlight', :content_type => 'text/javascript'}
     end
 
   end

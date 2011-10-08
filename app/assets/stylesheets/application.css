@@ -509,5 +509,5 @@ color: white;
   text-align: left;
 }
 
-*= require jquery.treeTable
-*= require on_the_spot_in_tree
+/**= require jquery.treeTable*/
+/**= require on_the_spot_in_tree*/

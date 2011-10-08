@@ -1,16 +1,19 @@
 <br/>
 <p id="notice"><%= alert %></p>
 <center><img src="/assets/gospelr.png" width="300"></center>
-<h1>Log In</h1>
 <br/>
 
+<div id="contentwrap">
+	<h1>User Login</h1>
+	<br/>
+<center><table width="600px"><tr><td width="50%">
 <div id="generalform">
 
 <%= form_tag sessions_path do %>
 
 	<div class="field">
     <%= label_tag :username %><br />
-    <%= text_field_tag :username, params[:username] %>
+    <%= text_field_tag :username, params[:username], :autofocus => true %>
   </div>
 	<div class="field">
     <%= label_tag :password %><br />
@@ -21,4 +24,16 @@
   </div>
   
 <% end %>
+</div>
+
+
+</td>
+<td width="1" valign="top" style="background-image: url(/assets/dashed_vertical.gif); background-position: left center; background-repeat: repeat-y;">
+</td>
+<td align="center"><br/><br/>
+	<p><a href="/auth/facebook"><%= image_tag "facebook_login.png" %></a></p><br/>
+	<p><a href="/auth/twitter"><%= image_tag "twitter_login.png" %><%# image_tag "twitter_button_3_lo.gif" %></a></p>
+</td></tr></table>
+</center>
+<br/>
 </div>

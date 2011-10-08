@@ -182,6 +182,18 @@ html, body {
 	color: #333333;
 	z-index:110;
 }
+#pagecontentwithlinks {
+    font-size:1.4em;
+    line-height: 26px;
+    letter-spacing:0.01em;
+	word-spacing:2px;
+	height: auto !important;
+	min-height: 300px;
+	height: 300px;
+	color: #333333;
+	z-index:110;
+}
+
 #pagecontent p {
     margin-bottom:1em;
 }
@@ -219,14 +231,14 @@ html, body {
     letter-spacing:0.01em;
 	color: #727272;
 }
-#pagecontent img {
+/*#pagecontent img {
 
 	/*float: right;*/
 	padding: 10px;
 	display:block;
 	margin: 0 auto;
 }
-
+*/
 #pagecontent a img {
 
 }
@@ -269,7 +281,7 @@ html, body {
 }
 
 #pagecontent button:hover {
-	background: #2a81d7;
+  background: #2a81d7;
   background: -moz-linear-gradient(0% 100% 90deg, #206bcb, #3e9ee5);
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, 
   from(#3e9ee5), to(#206bcb));
@@ -471,6 +483,13 @@ color: white;
 	margin-top: 125px;	
 }
 
+#photobar {
+	position:absolute;
+	left:75px;
+	margin-top: 25px;	
+	text-decoration: underline;
+}
+
 #notebar {
 	position:absolute;
 	right:5px;
@@ -479,6 +498,15 @@ color: white;
 }
 #profilecomment {
 	width:100%;
+}
+#contentwrap {
+  width: 750px;
+  border: 2px solid gray;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f6f6f6;
+  text-align: left;
 }
 
 *= require jquery.treeTable

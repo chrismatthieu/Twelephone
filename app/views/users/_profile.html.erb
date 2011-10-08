@@ -1,3 +1,4 @@
+<div id="contentwrap">
 <div id="generalform">
 <%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
@@ -21,13 +22,10 @@
     <%= f.text_field :email %>
   </div>
   <div class="field">
-    <%= f.label "Twitter handle" %><br />
-    @<%= f.text_field :twitter %>
+    <%= f.check_box :allowemail %>
+	<%= f.label "Allow news and update emails from Gospelr" %>
   </div>
-  <div class="field">
-    <%= f.label "Facebook page" %><br />
-    <%= f.text_field :facebook %>
-  </div>
+
   <% if @current_user && @current_user.admin %>
   <div class="field">
     <%= f.label :admin %><br />
@@ -36,7 +34,8 @@
   <% end %>
 
   <div class="actions">
-    <p><%= f.submit %></p>
+    <p><%= f.submit %> <%=link_to "change password", "/users/password" %></p>
   </div>
 <% end %>
+</div>
 </div>

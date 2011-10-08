@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110925155441) do
+ActiveRecord::Schema.define(:version => 20111008141554) do
 
   create_table "bibles", :force => true do |t|
     t.string   "name"
@@ -29,15 +29,26 @@ ActiveRecord::Schema.define(:version => 20110925155441) do
     t.string   "color"
   end
 
+  create_table "follows", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "follow_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "username"
     t.string   "password_digest"
     t.string   "email"
-    t.string   "twitter"
-    t.string   "facebook"
     t.boolean  "admin"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "photo"
+    t.boolean  "allowemail"
+    t.string   "access_token"
+    t.string   "access_secret"
   end
 
   create_table "verses", :force => true do |t|

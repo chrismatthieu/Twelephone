@@ -19,21 +19,32 @@
 <body>
 	<div id="leftbar">
 		<p align="left">
-		
+		<br/><br/>
 		<% if @current_user %>
-			<%= gravatar_image_tag @current_user.email, :class => "gravatar", :width => "15" rescue ""%> <%= @current_user.username.capitalize %> | 
-
-			<%= link_to 'home', "/" %> |
-			<% if @current_user %>
-				<%= link_to 'profile', user_path(@current_user) %> |
+<center>
+			<% if @current_user.photo %>	
+				<img src="<%= @current_user.photo %>" width="15" height="15" />
+			<% else %>
+				<%= gravatar_image_tag @current_user.email, :class => "gravatar", :width => "15" rescue ""%> 
 			<% end %>
+			<%= link_to @current_user.username.capitalize, "/" + @current_user.username  %> | 		
 
-			<%= link_to 'logout', '/logout' %>
-
+			<%= link_to 'Home', "/" %> |
+			<%= link_to 'Logout', '/logout' %><br/>
+			
+			<%= link_to 'Activity', '/feed' %> | 
+			<%= link_to 'Following', '/' + @current_user.username + '/following' %> |
+			<%= link_to 'Followers', '/' + @current_user.username + '/followers' %> 
+</center>
 		<% else %>
-			<%= link_to 'home', "/" %> |
-			<%= link_to 'register', new_user_path %> | 
-			<%= link_to 'login', '/login' %>
+			<%= link_to 'Home', "/" %> |
+			<%= link_to 'Register', new_user_path %> | 
+			<%= link_to 'Login', '/login' %>
+		<% end %>
+		<br/>
+		<% if controller.controller_name != "verses" and controller.controller_name != "users" and controller.controller_name != "follows" %>
+			<br/><br/><br/>
+			<%# link_to image_tag("/assets/start-reading.png"), "/genesis/1/1"%>
 		<% end %>
 		
 		</p>
@@ -105,7 +116,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 	
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 	</script>
@@ -113,7 +124,14 @@ $(document).ready(function() {
 	try {
 	var pageTracker = _gat._getTracker("UA-2483685-13");
 	pageTracker._trackPageview();
-	} catch(err) {}</script>
+	} catch(err) {}</script> -->
+	
+	<div id="footer">
+		<br/>
+		<% time = Time.new %>
+		&copy; <%=time.year%> GetVocal, inc. - <%=link_to "About Us", "/about"%> - <%=link_to "Blog", "http://gospelr.tumblr.com"%>
+	</div>
+	
 	
 </body>
 </html>

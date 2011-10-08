@@ -1,7 +1,10 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'
+
 gem 'omniauth'
+gem 'twitter'
+
 gem "will_paginate"
 gem 'gravatar_image_tag', '1.0.0.pre2'
 

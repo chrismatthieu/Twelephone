@@ -1,0 +1,87 @@
+<p id="notice"><%= notice %></p>
+
+<% if @follows %>
+
+<br/>
+<% if params[:view] == 'following' %>
+	<% if @current_user == @user %>
+		<h1>You Are Following </h1>
+	<% else %>
+		<h1><%= @user.username.capitalize %> is <%=params[:view].capitalize %></h1>
+	<% end %>
+<% else %>
+	<% if @current_user == @user %>
+		<h1>People Following You </h1>
+	<% else %>
+		<h1>People <%=params[:view].capitalize %> <%= @user.username.capitalize %></h1>
+	<% end %>
+<% end %>
+<br/>
+
+<div id="pagecontent">
+
+	<div id="photobar">
+		<center>
+		<% if @user.photo %>	
+			<img src="<%= @user.photo %>" width="100" height="100" />
+		<% else %>
+			<%= gravatar_image_tag @user.email, :class => "gravatar" rescue ""%>
+		<% end %><br/>
+		<% if @current_user.id == @user.id %>
+			<span style="a:underline"><%= link_to 'Edit Profile', "/users/" + @current_user.username + "/edit" %> </span>
+		<% end %>
+		</center>
+	
+	</div>
+
+<% @follows.each do |follow| %>
+
+	<% if params[:view] == 'following'%>
+		<% @followuser = User.find(follow.follow_id)%><br/>		
+	<% else %>	
+		<% @followuser = User.find(follow.user_id)%><br/>
+	<% end %>
+
+	<% if @followuser.photo %>	
+		<img src="<%= @followuser.photo %>" width="100" height="100" />
+	<% else %>
+		<%= gravatar_image_tag @followuser.email, :class => "gravatar" rescue ""%>
+	<% end %>
+	<%= @followuser.username.capitalize%>
+	
+	<div id="userstatus">
+		
+		<% if params[:view] == 'following'%>
+			<%= form_for :follow, :url=>{:controller=>"follows", :action=>"create", :id=>follow.follow_id, :status=>'unfollow' }, :remote => true do |f| %>
+				<%= button_tag("Unfollow", :title=>"Unfollow " + @followuser.username.capitalize ) %>
+			<% end %>
+		<% else %>
+	        <% @followback = Follow.find(:first, :conditions => ["user_id = ? and follow_id = ?", @current_user.id, follow.user_id]) %>
+	
+			<% if @followback %>	      
+				<%= form_for :follow, :url=>{:controller=>"follows", :action=>"create", :id=>follow.user_id, :status=>'unfollow' }, :remote => true do |f| %>
+					<%= button_tag("Unfollow", :title=>"Unfollow " + @followuser.username.capitalize ) %>
+				<% end %>
+			<% else %>
+				<%= form_for :follow, :url=>{:controller=>"follows", :action=>"create", :id=>follow.follow_id, :status=>'follow' }, :remote => true do |f| %>
+					<%= button_tag("Follow", :title=>"Follow " + @followuser.username.capitalize ) %>
+				<% end %>
+			<% end %>
+		<% end %>
+		
+	</div>
+	<br/><br/>
+<% end %>
+
+</div>
+
+<br />
+<p><center><%= will_paginate @follows %></center></p>
+<br/><br/>
+
+<% else %>
+<br/><br/><br/><br/>
+<h1>User not found :(</h1>
+<div id="pagecontent">
+</div>
+<% end %>

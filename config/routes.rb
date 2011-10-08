@@ -1,8 +1,21 @@
 Gospelr3::Application.routes.draw do
 
+
   match 'verses/highlight' => 'verses#highlight'
   match 'comments/create' => 'comments#create'
 
+  # Omniauth pure
+  match "/signin" => "sessions#signin"
+  match "/signout" => "sessions#signout"
+
+  match '/auth/:service/callback' => 'sessions#create' 
+  match '/auth/failure' => 'sessions#failure'
+  match '/auth/:provider' => "application#omniauth"
+  match '/users/password' => "users#password"
+  match '/feed' => "users#feed"
+  match '/tweetverse' => "static#tweetverse"
+
+  
   resources :users
   resources :verses
   resources :bibles
@@ -13,7 +26,11 @@ Gospelr3::Application.routes.draw do
     collection do
       put :update_attribute_on_the_spot_in_tree
     end
-  end
+  end  
+  resources :follows
+
+  match ':user/following' => 'follows#index', :view => 'following'
+  match ':user/followers' => 'follows#index', :view => 'followers'
 
   match 'search/:id' => 'verses#search'
   match 'search' => 'verses#search'
@@ -24,10 +41,12 @@ Gospelr3::Application.routes.draw do
   match '/logout' => 'sessions#destroy'
   match '/password/:id' => 'users#password'
 
-  match ':book/:chapter' => 'verses#jump'
+  match ':book/:chapter' => 'verses#jump' #, :constraints => {:book => /!(auth)/}
   match ':book/:chapter/:verse' => 'verses#jump'
   match '/about' => 'static#about'
   
+  match ':user' => 'users#show'
+
 
 
   # The priority is based upon order of creation:

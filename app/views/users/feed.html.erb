@@ -1,0 +1,97 @@
+<br/><p id="notice"><%= notice %></p>
+<h1>Gospelr Activity</h1><br/>
+
+<% if @current_user %>
+<div id="pagecontent">
+
+	<% @activities.each do |activity| %>
+
+		<% @followuser = activity.user%>
+		
+		<a href="/<%=@followuser.username%>">
+		<% if @followuser.photo %>	
+			<img src="<%= @followuser.photo %>" width="100" height="100" />
+		<% else %>
+			<%= gravatar_image_tag @followuser.email, :class => "gravatar" rescue ""%>
+		<% end %>
+
+		<b><%= @followuser.username %></b></a>
+
+		<% if !activity.color.nil? %>
+			<span id="highlight_<%= activity.id%>" style="background-color:<%=activity.color%>">
+		<% else %>
+			<span id="highlight_<%= activity.id%>">
+		<% end %>
+
+		<a href="/<%=activity.verse.book_name.gsub(" ", "")%>/<%=activity.verse.chapter%>/<%=activity.verse.number%>">
+		<%= activity.verse.book_name + ' ' +activity.verse.chapter.to_s + ':' + activity.verse.number.to_s %>
+		<%= activity.verse.text%></a>
+		</span>
+
+		<% if activity.comment %>
+
+		<div id="profilecomment" class="comment_<%=activity.id%>">&nbsp;</div>
+		<script>
+		// http://craigsworks.com/projects/qtip2/demos/#tips
+		var at = [
+		      'bottom left', 'bottom right', 'bottom center',
+		      'top left', 'top right', 'top center',
+		      'left center', 'left top', 'left bottom',
+		      'right center', 'right top', 'right bottom', 'center'
+		   ],
+		   my = [
+		      'top left', 'top right', 'top center',
+		      'bottom left', 'bottom right', 'bottom center',
+		      'right center', 'right top', 'right bottom',
+		      'left center', 'left top', 'left bottom', 'center'
+		   ],
+		   styles = [
+		      'red', 'blue', 'dark', 'light', 'green', 'jtools', 'plain', 'youtube', 'cluetip', 'tipsy', 'tipped'
+		   ];
+
+		// Create the tooltips only on document load
+		$(document).ready(function()
+		{
+		      $('.comment_<%=activity.id%>')
+		         /*
+		          * Lets delete the qTip data from our target element so we can apply multiple tooltips.
+		          * Since the data is also stored on the tooltip element itself this isn't a problem!
+		          * 
+		          * Check here for more details on this: http://craigsworks.com/projects/qtip2/tutorials/advanced/#multi
+		          */
+		         .removeData('qtip') 
+		         .qtip({
+		            content: {
+		               text: '<%= activity.comment.gsub("\n"," ").gsub("\r"," ") %>'
+		            },
+		            position: {
+		               my: 'top center', // Use the corner...
+		               at: 'center' // ...and opposite corner
+		            },
+		            show: {
+		               event: false, // Don't specify a show event...
+		               ready: true // ... but show the tooltip when ready
+		            },
+		            hide: false, // Don't specify a hide event either!
+		            style:{ 
+		               	classes: 'ui-tooltip-shadow ui-tooltip-cream',
+						width: '800px'
+	            	}
+		         });
+		});
+		</script>
+		<% end %>
+		<br/><br/>
+
+	<% end %>
+
+	</div>
+
+	<br />
+	<p><center><%= will_paginate @activities, :page_links => false %></center></p>
+	<br />
+	<br/><br/>
+
+
+</div>
+<% end %>

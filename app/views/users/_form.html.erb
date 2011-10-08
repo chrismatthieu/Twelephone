@@ -1,3 +1,8 @@
+<div id="contentwrap">
+	<h1>New User Registration</h1>
+	<br/>
+<center><table width="600px"><tr><td width="60%">
+	
 <div id="generalform">
 <%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
@@ -14,20 +19,12 @@
 
   <div class="field">
     <%= f.label :username %><br />
-    <%= f.text_field :username %>
+    <%= f.text_field :username, :autofocus => true %>
   </div>
   <div class="field">
     <%= f.label :email %><br />
     <%= f.text_field :email %>
   </div>
-  <!-- <div class="field">
-    <%= f.label :twitter %><br />
-    <%= f.text_field :twitter %>
-  </div>
-  <div class="field">
-    <%= f.label :facebook %><br />
-    <%= f.text_field :facebook %>
-  </div> -->
   <% if @current_user && @current_user.admin %>
   <div class="field">
     <%= f.label :admin %><br />
@@ -43,8 +40,22 @@
     <%= f.password_field :password_confirmation %>
   </div>
   <% end %>
+  <div class="field">
+    <%= f.check_box :allowemail, :checked => true %>
+	<%= f.label "Allow news and update emails from Gospelr" %>
+  </div>
   <div class="actions">
     <p><%= f.submit %></p>
   </div>
 <% end %>
+</div>
+</td>
+<td width="1" valign="top" style="background-image: url(/assets/dashed_vertical.gif); background-position: left center; background-repeat: repeat-y;">
+</td>
+<td align="center"><br/><br/>
+	<p><a href="/auth/facebook"><%= image_tag "facebook_login.png" %></a></p><br/>
+	<p><a href="/auth/twitter"><%= image_tag "twitter_login.png" %><%# image_tag "twitter_button_3_lo.gif" %></a></p>
+</td></tr></table>
+</center>
+<br/>
 </div>

@@ -17,14 +17,35 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
-    # @activities = User.comments.paginate :page => params[:page], :per_page => 3
-    @activities = Comment.paginate :page => params[:page], :conditions => ['user_id = ?', @user.id], :order => 'created_at DESC'
+    if params[:id] and isNumeric(params[:id])
+      @user = User.find(params[:id])
+    else
+      @user = User.find_by_username(params[:user])
+    end
+    
+    if @user
+      @follow = Follow.find(:first, :conditions => ["user_id = ? and follow_id = ?", @current_user.id, @user.id])
+
+      # @activities = User.comments.paginate :page => params[:page], :per_page => 3
+      @activities = Comment.paginate :page => params[:page], :conditions => ['user_id = ?', @user.id], :order => 'updated_at DESC'
+    end 
     
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
     end
+  end
+  
+  def feed
+     # ITS GRABBING THE WRONG USERID 
+     # @activities = Comment.find_by_sql("SELECT * FROM comments, follows where (comments.user_id = follows.follow_id or comments.user_id = #{@current_user.id}) and (follows.user_id = #{@current_user.id}) order by comments.updated_at DESC")
+     
+     
+     @activities = Comment.paginate :page => params[:page], :per_page => 10, :select => "comments.user_id, comments.verse_id, comments.comment, comments.color",  
+     :conditions => ["(follows.user_id = #{@current_user.id})"],
+     :joins => "left outer join follows on comments.user_id = follows.follow_id or comments.user_id = #{@current_user.id}",
+     :order => 'comments.updated_at DESC'
+          
   end
 
   # GET /users/new
@@ -64,7 +85,14 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        
+        # Send welcome email
+        @message = "Welcome to Gospelr!"
+        Notifier.contact(@user.email, "chris@gospelr.com", @message).deliver
+        
+        session[:user_id] = @user.id
+        
+        format.html { redirect_to "/", notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }

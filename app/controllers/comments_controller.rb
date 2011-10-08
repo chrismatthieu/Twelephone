@@ -1,17 +1,19 @@
 class CommentsController < ApplicationController
 
+  before_filter :current_user  
+
   can_edit_on_the_spot_in_tree
 
   def create
     
     @comment = Comment.new
-    @comment.user_id = current_user.id
+    @comment.user_id = @current_user.id
     @comment.verse_id = params["id"]
     @comment.comment = params["comment"]["comment"]
     @comment.save
         
     respond_to do |format|  
-      format.js { render 'create.js' }
+      format.js
     end
     
   end

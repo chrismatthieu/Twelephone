@@ -8,14 +8,6 @@
 	<%= render :partial => "verse", :collection => @verses %>
 </div>
 
-
-
-
-
-<%# if params[:commit] != "Search" %>
-	<%# render :partial => "gotoform", :locals => { :bible => @bible } %>
-<%# end %>
-
 <br />
 <p><center><%= will_paginate @verses %></center></p>
 <br /><br /><br />

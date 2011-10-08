@@ -81,7 +81,7 @@ class FollowsController < ApplicationController
     end
     
     respond_to do |format|  
-      format.js 
+      format.js { render :action => 'create.js.coffee', :content_type => 'text/javascript'}
     end
     
   end

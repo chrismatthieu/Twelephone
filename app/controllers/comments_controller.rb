@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       # format.html { redirect_to comments_url }
-      format.js
+      format.js { render :action => 'destroy.js.coffee', :content_type => 'text/javascript'}
     end
   end
 

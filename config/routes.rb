@@ -13,6 +13,7 @@ Gospelr3::Application.routes.draw do
   match '/auth/:provider' => "application#omniauth"
   match '/users/password' => "users#password"
   match '/feed' => "users#feed"
+  match '/allfeed' => "users#allfeed"
   match '/tweetverse' => "static#tweetverse"
 
   

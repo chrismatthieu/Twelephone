@@ -36,6 +36,16 @@ class UsersController < ApplicationController
     end
   end
   
+  def allfeed
+     # ITS GRABBING THE WRONG USERID 
+     # @activities = Comment.find_by_sql("SELECT * FROM comments, follows where (comments.user_id = follows.follow_id or comments.user_id = #{@current_user.id}) and (follows.user_id = #{@current_user.id}) order by comments.updated_at DESC")
+     
+     
+     @activities = Comment.paginate :page => params[:page], :per_page => 10, :select => "comments.user_id, comments.verse_id, comments.comment, comments.color",  
+     :order => 'comments.updated_at DESC'
+          
+  end
+
   def feed
      # ITS GRABBING THE WRONG USERID 
      # @activities = Comment.find_by_sql("SELECT * FROM comments, follows where (comments.user_id = follows.follow_id or comments.user_id = #{@current_user.id}) and (follows.user_id = #{@current_user.id}) order by comments.updated_at DESC")

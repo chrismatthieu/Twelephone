@@ -29,10 +29,10 @@
 			<% end %>
 			<%= link_to @current_user.username.capitalize, "/" + @current_user.username  %> | 		
 
-			<%= link_to 'Home', "/" %> |
+			<%= link_to 'Bible', "/" %> |
 			<%= link_to 'Logout', '/logout' %><br/>
 			
-			<%= link_to 'Activity', '/feed' %> | 
+			<%= link_to 'Timeline', '/allfeed' %> | 
 			<%= link_to 'Following', '/' + @current_user.username + '/following' %> |
 			<%= link_to 'Followers', '/' + @current_user.username + '/followers' %> 
 </center>

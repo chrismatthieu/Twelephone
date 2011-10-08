@@ -15,7 +15,7 @@ Gospelr3::Application.configure do
   config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = true
+  config.assets.compile = false #true
 
   # Generate digests for assets URLs
   config.assets.digest = true
@@ -31,7 +31,7 @@ Gospelr3::Application.configure do
   # config.force_ssl = true
 
   # See everything in the log (default is :info)
-  config.log_level = :debug
+  # config.log_level = :debug
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new

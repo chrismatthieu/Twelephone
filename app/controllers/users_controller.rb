@@ -63,7 +63,11 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     if @current_user.admin
-      @user = User.find(params[:id])
+      if params[:id] and isNumeric(params[:id])
+        @user = User.find(params[:id])
+      else
+        @user = User.find_by_username(params[:id])
+      end
     else
       @user = User.find(@current_user.id)
     end
@@ -71,11 +75,15 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def password
-    if @current_user.admin
-      @user = User.find(params[:id])
-    else
+    # if @current_user.admin
+    #   if params[:id] and isNumeric(params[:id])
+    #     @user = User.find(params[:id])
+    #   else
+    #     @user = User.find_by_username(params[:id])
+    #   end
+    # else
       @user = User.find(@current_user.id)
-    end
+    # end
   end
 
   # POST /users
@@ -107,7 +115,7 @@ class UsersController < ApplicationController
     if params[:id] and isNumeric(params[:id])
       @user = User.find(params[:id])
     else
-      @user = User.find_by_username(params[:user])
+      @user = User.find_by_username(params[:id])
     end
     
 

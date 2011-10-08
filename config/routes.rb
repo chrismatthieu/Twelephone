@@ -40,10 +40,10 @@ Gospelr3::Application.routes.draw do
   match '/login' => 'sessions#new'
   match '/logout' => 'sessions#destroy'
   match '/password/:id' => 'users#password'
+  match '/about' => 'static#about'
 
   match ':book/:chapter' => 'verses#jump' #, :constraints => {:book => /!(auth)/}
   match ':book/:chapter/:verse' => 'verses#jump'
-  match '/about' => 'static#about'
   
   match ':user' => 'users#show'
 

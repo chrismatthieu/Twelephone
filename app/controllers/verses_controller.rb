@@ -193,15 +193,31 @@ class VersesController < ApplicationController
     end
 
     if verse.nil?
-      @verses = Verse.paginate(:conditions => ["book_name = ? and bible_id = ? and chapter >= ?", book, session[:bible], chapter], 
-      :page => params[:page])
+      
+      if request.url.index('localhost')
+        @verses = Verse.paginate(:conditions => ["book_name LIKE ? and bible_id = ? and chapter >= ?", '%' + book + '%', session[:bible], chapter], 
+        :page => params[:page])
+       else
+         @verses = Verse.paginate(:conditions => ["book_name ILIKE ? and bible_id = ? and chapter >= ?", '%' + book + '%', session[:bible], chapter], 
+         :page => params[:page])
+      end
+                        
 
       # @verses = Verse.find(:all, 
       # :conditions => ["book_name = ? and bible_id = ? and chapter >= ?", book, session[:bible], chapter])
 
     else
-      @verses = Verse.paginate(:conditions => ["book_name = ? and bible_id = ? and chapter >= ? and number >= ?", book, session[:bible], chapter, verse], 
-      :page => params[:page])      
+      
+      if request.url.index('localhost')
+        @verses = Verse.paginate(:conditions => ["book_name LIKE ? and bible_id = ? and chapter >= ? and number >= ?", '%' + book + '%', session[:bible], chapter, verse], 
+        :page => params[:page])      
+
+       else
+         @verses = Verse.paginate(:conditions => ["book_name ILIKE ? and bible_id = ? and chapter >= ? and number >= ?", '%' + book + '%', session[:bible], chapter, verse], 
+         :page => params[:page])      
+      end
+      
+      
 
       # @verses = Verse.find(:all, 
       # :conditions => ["book_name = ? and bible_id = ? and chapter >= ? and number >= ?", book, session[:bible], chapter, verse])

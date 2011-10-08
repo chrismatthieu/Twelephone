@@ -76,8 +76,8 @@ class FollowsController < ApplicationController
     
     if params[:status] == "follow"
       # Send welcome email
-      @message = "Hi #{@current_user.username.capitalize}, \n\n#{@user.username.capitalize} is now following you on Gospelr! You can follow them back by clicking on this link: http://gospelr.com/#{@user.username} \n\nGod Bless, \nGospelr"
-      Notifier.contact(@current_user.email, "chris@gospelr.com", @message).deliver
+      @message = "Hi #{@user.username.capitalize}, \n\n #{@current_user.username.capitalize} is now following you on Gospelr! You can follow them back by clicking on this link: http://gospelr.com/#{@current_user.username} \n\nGod Bless, \nGospelr"
+      Notifier.contact(@user.email, "chris@gospelr.com", @message).deliver
     end
     
     respond_to do |format|  

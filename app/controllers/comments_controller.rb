@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
     @comment.save
         
     respond_to do |format|  
-      format.js 
+      format.js { render 'create.js' }
     end
     
   end

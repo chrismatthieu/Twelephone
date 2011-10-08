@@ -1,0 +1,3 @@
+$('#highlight_<%=@verse.id.to_s%>').html('<a href="#" onclick="$(\'#commentsdisp_<%=@verse.id.to_s%>\').slideToggle(\'slow\', function(){});; return false;"><span id="highlight_<%=@verse.id.to_s%>" style="background-color:<%=@highlight.color rescue "white"%>"><span class="charge"><%=@verse.chapter.to_s%>:<%= @verse.number.to_s%></span> <%=@verse.text%></span></a>') 
+
+$('#commentsdisp_<%=@verse.id.to_s%>').hide()

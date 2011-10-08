@@ -247,7 +247,7 @@ class VersesController < ApplicationController
     @verse = Verse.find(params["id"])
     
     respond_to do |format|  
-      format.js { 'highlight.js'}
+      format.js { render :action => 'highlight', :content_type => 'text/javascript'}
     end
 
   end

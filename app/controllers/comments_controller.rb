@@ -26,10 +26,10 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
         format.html { redirect_to @comment, notice: 'Note was successfully updated.' }
-        format.json { head :ok }
+        format.js { head :ok }
       else
         format.html { render action: "edit" }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+        format.js { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end

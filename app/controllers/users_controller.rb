@@ -36,22 +36,16 @@ class UsersController < ApplicationController
     end
   end
   
-  def allfeed
-     # ITS GRABBING THE WRONG USERID 
-     # @activities = Comment.find_by_sql("SELECT * FROM comments, follows where (comments.user_id = follows.follow_id or comments.user_id = #{@current_user.id}) and (follows.user_id = #{@current_user.id}) order by comments.updated_at DESC")
+  def allfeed     
      
-     
-     @activities = Comment.paginate :page => params[:page], :per_page => 10, :select => "comments.user_id, comments.verse_id, comments.comment, comments.color",  
+     @activities = Comment.paginate :page => params[:page], :select => "comments.user_id, comments.verse_id, comments.comment, comments.color, comments.updated_at",  
      :order => 'comments.updated_at DESC'
           
   end
 
-  def feed
-     # ITS GRABBING THE WRONG USERID 
-     # @activities = Comment.find_by_sql("SELECT * FROM comments, follows where (comments.user_id = follows.follow_id or comments.user_id = #{@current_user.id}) and (follows.user_id = #{@current_user.id}) order by comments.updated_at DESC")
+  def feed     
      
-     
-     @activities = Comment.paginate :page => params[:page], :per_page => 10, :select => "comments.user_id, comments.verse_id, comments.comment, comments.color",  
+     @activities = Comment.paginate :page => params[:page], :select => "comments.user_id, comments.verse_id, comments.comment, comments.color, comments.updated_at",  
      :conditions => ["follows.user_id = ? or comments.user_id = ?", @current_user.id, @current_user.id],
      :joins => "left outer join follows on comments.user_id = follows.follow_id or comments.user_id = #{@current_user.id}",
      :order => 'comments.updated_at DESC'

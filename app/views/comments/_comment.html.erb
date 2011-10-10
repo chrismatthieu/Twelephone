@@ -1,6 +1,6 @@
 <% @verses.each do |verse| %>
-	<%# comments = Comment.find(:all, :conditions=>['user_id = ? and verse_id = ? and comment IS NOT NULL', current_user.id, verse.id]) rescue nil%>
-	<% comments = Comment.find(:all, :conditions=>['user_id = ? and verse_id = ? and comment != ?', current_user.id, verse.id, "NULL" ]) rescue nil%>
+	<% comments = Comment.find(:all, :conditions=>['user_id = ? and verse_id = ? and comment IS NOT NULL', current_user.id, verse.id]) rescue nil%>
+	<%# comments = Comment.find(:all, :conditions=>['user_id = ? and verse_id = ? and comment != ?', current_user.id, verse.id, "NULL" ]) rescue nil%>
 	<% comments.each do |comment| %>
 		<div id="comment_<%=comment.id.to_s %>" class="notes">
 			<span class="charge"><%= verse.chapter.to_s + ":" + verse.number.to_s rescue "" %></span> <%# comment.comment rescue ""%>

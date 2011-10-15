@@ -99,8 +99,8 @@ class SessionsController < ApplicationController
           
           if !@user.email.nil?
             # Send welcome email
-            @message = "Welcome to Gospelr!"
-            Notifier.contact(@authhash[:email], "chris@gospelr.com", @message).deliver
+            @message = "Welcome to MayWeHelp!"
+            Notifier.contact(@authhash[:email], "chris@maywehelp.com", @message).deliver
           end 
           
           session[:user_id] = @user.id      

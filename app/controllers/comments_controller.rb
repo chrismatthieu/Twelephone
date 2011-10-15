@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
     
     @comment = Comment.new
     @comment.user_id = @current_user.id
-    @comment.verse_id = params["id"]
+    @comment.issue_id = params["id"]
     @comment.comment = params["comment"]["comment"]
     @comment.save
         

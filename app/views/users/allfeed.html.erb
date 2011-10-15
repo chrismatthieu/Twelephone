@@ -1,8 +1,8 @@
 <br/><p id="notice"><%= notice %></p>
-<h1>Gospelr Activity (<%= link_to "your timeline", "/feed"%>)</h1><br/>
+<h1>MayWeHelp Activity (<%= link_to "your timeline", "/feed"%>)</h1><br/>
 
 <% if @current_user %>
-<div id="pagecontent">
+<div id="pagecontentwithlinks">
 
 	<% @activities.each do |activity| %>
 
@@ -17,27 +17,26 @@
 
 		<b><%= @followuser.username %></b></a>
 
-		<% if !activity.color.nil? %>
-			<span id="highlight_<%= activity.id%>" style="background-color:<%=activity.color%>">
-		<% else %>
-			<span id="highlight_<%= activity.id%>">
-		<% end %>
 
-		<a href="/<%=activity.verse.book_name.gsub(" ", "")%>/<%=activity.verse.chapter%>/<%=activity.verse.number%>">
-		<%= activity.verse.book_name + ' ' +activity.verse.chapter.to_s + ':' + activity.verse.number.to_s %>
-		<%= activity.verse.text%></a>
-		</span>
 
-		<% if activity.comment %>
-		
-		<div class="bubble">
-				<blockquote>
-					<p><%= activity.comment.gsub("\n"," ").gsub("\r"," ") %></p><br /><br />
-				</blockquote>
-				<cite>Updated <%= time_ago_in_words activity.updated_at rescue "a short while "%> ago</cite>
-		</div>
+			<a href="/issues/<%=activity.id%>">
+			<%= activity.title %></a>
+			</span>
 
-		<% end %>
+			<%# if activity.comments %>
+			<% activity.comments.each do |comment| %>
+
+			<div class="bubble">
+					<blockquote>
+						<p><%= comment.comment %></p><br /><br />
+					</blockquote>
+					<cite>Updated <%= time_ago_in_words comment.created_at %> ago</cite>
+			</div>
+
+			<% end %>
+
+
+
 
 	<% end %>
 

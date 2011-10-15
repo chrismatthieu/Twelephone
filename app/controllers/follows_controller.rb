@@ -79,8 +79,8 @@ class FollowsController < ApplicationController
       # Send welcome email
       if @user.email 
         begin
-          @message = "Hi #{@user.username.capitalize}, \n\n #{@current_user.username.capitalize} is now following you on Gospelr! You can follow them back by clicking on this link: http://gospelr.com/#{@current_user.username} \n\nGod Bless, \nGospelr"
-          Notifier.contact(@user.email, "chris@gospelr.com", @message).deliver
+          @message = "Hi #{@user.username.capitalize}, \n\n #{@current_user.username.capitalize} is now following you on MayWeHelp! You can follow them back by clicking on this link: http://maywehelp.com/#{@current_user.username} \n\nGeeks Rule, \nMayWeHelp"
+          Notifier.contact(@user.email, "chris@maywehelp.com", @message).deliver
         rescue
         end
       end

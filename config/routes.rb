@@ -1,7 +1,8 @@
-Gospelr3::Application.routes.draw do
+Maywehelp::Application.routes.draw do
 
 
-  match 'verses/highlight' => 'verses#highlight'
+  resources :issues
+
   match 'comments/create' => 'comments#create'
 
   # Omniauth pure
@@ -14,12 +15,9 @@ Gospelr3::Application.routes.draw do
   match '/users/password' => "users#password"
   match '/feed' => "users#feed"
   match '/allfeed' => "users#allfeed"
-  match '/tweetverse' => "static#tweetverse"
 
   
   resources :users
-  resources :verses
-  resources :bibles
   resources :sessions
   # resources :comments
   
@@ -33,18 +31,13 @@ Gospelr3::Application.routes.draw do
   match ':user/following' => 'follows#index', :view => 'following'
   match ':user/followers' => 'follows#index', :view => 'followers'
 
-  match 'search/:id' => 'verses#search'
-  match 'search' => 'verses#search'
-  match 'jump/:id' => 'verses#jump'
-  match 'jump' => 'verses#jump'
-
   match '/login' => 'sessions#new'
   match '/logout' => 'sessions#destroy'
   match '/password/:id' => 'users#password'
   match '/about' => 'static#about'
-
-  match ':book/:chapter' => 'verses#jump' #, :constraints => {:book => /!(auth)/}
-  match ':book/:chapter/:verse' => 'verses#jump'
+  
+  match '/search/:id' => 'issues#search'
+  match '/search' => 'issues#search'
   
   match ':user' => 'users#show'
 

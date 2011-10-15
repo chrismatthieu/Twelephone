@@ -4,4 +4,5 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :username, :on => :create  
   has_many :comments
   has_many :follows
+  has_many :issues
 end

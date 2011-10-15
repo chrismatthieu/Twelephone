@@ -1,7 +1,7 @@
 <br/><p id="notice"><%= notice %></p>
 
 <% if @user %>
-<h1><%= @user.username.capitalize %>'<%= "s" if @user.username[-1,1] != "s"%> Gospelr Notes</h1><br/>
+<h1><%= @user.username.capitalize %>'<%= "s" if @user.username[-1,1] != "s"%> Activity</h1><br/>
 
 <div id="pagecontent">
 
@@ -37,25 +37,18 @@
 
 <% @activities.each do |activity| %>
 
-	
-	<% if !activity.color.nil? %>
-		<span id="highlight_<%= activity.id%>" style="background-color:<%=activity.color%>">
-	<% else %>
-		<span id="highlight_<%= activity.id%>">
-	<% end %>
-
-	<a href="/<%=activity.verse.book_name.gsub(" ", "")%>/<%=activity.verse.chapter%>/<%=activity.verse.number%>">
-	<%= activity.verse.book_name + ' ' +activity.verse.chapter.to_s + ':' + activity.verse.number.to_s %>
-	<%= activity.verse.text%></a>
+	<a href="/issues/<%=activity.id%>">
+	<%= activity.title %></a>
 	</span>
 	
-	<% if activity.comment %>
+	<%# if activity.comments %>
+	<% activity.comments.each do |comment| %>
 	
 	<div class="bubble">
 			<blockquote>
-				<p><%= activity.comment.gsub("\n"," ").gsub("\r"," ") %></p><br /><br />
+				<p><%= comment.comment %></p><br /><br />
 			</blockquote>
-			<cite>Updated <%= time_ago_in_words activity.created_at %> ago</cite>
+			<cite>Updated <%= time_ago_in_words comment.created_at %> ago</cite>
 	</div>
 	
 	<% end %>

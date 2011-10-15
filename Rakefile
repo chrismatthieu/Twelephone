@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Gospelr3::Application.load_tasks
+Maywehelp::Application.load_tasks

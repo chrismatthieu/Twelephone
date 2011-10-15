@@ -147,6 +147,19 @@ html, body {
 	font-size: 0.4em;
 	margin-right: 0.5em;
 }
+.page h2 {
+	font-family: "ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2" Georgia,serif;
+	-webkit-transform: rotate(-0.0000000001deg);
+	letter-spacing:-1px;
+	font-weight: 500;
+	font-style:italic;
+	padding-top:25px;
+    font-size:40px;
+    margin-bottom:25px;
+    text-align:left;
+	color: #727272;
+}
+
 .page h3 {
 	font-family: Georgia,serif;
 	font-weight: normal;

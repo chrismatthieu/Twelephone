@@ -11,27 +11,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111008141554) do
-
-  create_table "bibles", :force => true do |t|
-    t.string   "name"
-    t.string   "acronym"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20111014224054) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "verse_id"
+    t.integer  "issue_id"
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "color"
   end
 
   create_table "follows", :force => true do |t|
     t.integer  "user_id"
     t.integer  "follow_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "issues", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "description"
+    t.float    "offer"
+    t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -50,19 +52,5 @@ ActiveRecord::Schema.define(:version => 20111008141554) do
     t.string   "access_token"
     t.string   "access_secret"
   end
-
-  create_table "verses", :force => true do |t|
-    t.integer  "number"
-    t.text     "text"
-    t.integer  "chapter"
-    t.string   "book_name"
-    t.integer  "book_id"
-    t.integer  "bible_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "verses", ["bible_id"], :name => "index_verses_on_bible_id"
-  add_index "verses", ["book_id"], :name => "index_verses_on_book_id"
 
 end

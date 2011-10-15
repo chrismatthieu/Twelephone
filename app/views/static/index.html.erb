@@ -1,25 +1,24 @@
 <br/>
 <p id="notice"><%= alert %></p>
 <br/><br/>
-<center><img src="/assets/gospelr.png"></center>
+<center><img src="/assets/maywehelp.png" width="300"></center>
 
 <center>
 <%= form_for :search, :url=>"/search", :html => {:class => 'search', :id => 'search'}, :method => "get" do |f| %>
 	
 	<% 
 	if session[:searchterm].nil? 
-		session[:searchterm] = "Genesis 1:1"
+		session[:searchterm] = "Windows"
 	end
 	%>
 	<%= f.text_field "searchtext", :value => session[:searchterm], :class => "home-top-search-box", :autofocus => true %><%# f.hidden_field :bible_id, :value => bible.id %>
 	<%#text_field_with_auto_complete :text, :verse, :autocomplete => "off" %>
 	<%# submit_tag "Search"%>
 	<input type="submit" value="Search" name="commit" id="search-button" class="home-search-button"><br/>
-	<div class="search-text"><span style="color:#000;font-size:18px">Enter book chapter : verse or search keywords (<a href="/search/John 3%3A16">John 3:16</a>, <a href="/search/marriage">marriage</a>, <a href="/search/Holy Spirit">Holy Spirit</a>)
-		| <%= link_to 'Start Reading Bible', "/genesis/1" %> </span>
-		<% if false #logged_in? %>
-			| <%= link_to "Goto Bookmark", "/gotobookmark" %>
-		<% end %>
-	</div>
 <% end %>
+
+<div class="search-text"><span style="color:#000;font-size:18px">Search keywords (<a href="/search/windows">Windows</a>, <a href="/search/microsoft office">Microsoft Office</a>)
+	| <%= link_to 'All Issues', "/issues" %> </span>
+</div>
+
 </center>

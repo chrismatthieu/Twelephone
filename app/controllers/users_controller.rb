@@ -27,7 +27,8 @@ class UsersController < ApplicationController
       @follow = Follow.find(:first, :conditions => ["user_id = ? and follow_id = ?", @current_user.id, @user.id])
 
       # @activities = User.comments.paginate :page => params[:page], :per_page => 3
-      @activities = Comment.paginate :page => params[:page], :conditions => ['user_id = ?', @user.id], :order => 'updated_at DESC'
+      # @activities = Comment.paginate :page => params[:page], :conditions => ['user_id = ?', @user.id], :order => 'updated_at DESC'
+      @activities = Issue.paginate :page => params[:page], :conditions => ['user_id = ?', @user.id], :order => 'updated_at DESC'
     end 
     
     respond_to do |format|
@@ -38,14 +39,17 @@ class UsersController < ApplicationController
   
   def allfeed     
      
-     @activities = Comment.paginate :page => params[:page], :select => "comments.user_id, comments.verse_id, comments.comment, comments.color, comments.updated_at",  
-     :order => 'comments.updated_at DESC'
+     # @activities = Comment.paginate :page => params[:page], :select => "comments.user_id, comments.issue_id, comments.comment, comments.updated_at",  
+     # :order => 'comments.updated_at DESC'
+     
+     @activities = Issue.paginate :page => params[:page], :order => 'updated_at DESC'
+     
           
   end
 
   def feed     
      
-     @activities = Comment.paginate :page => params[:page], :select => "comments.user_id, comments.verse_id, comments.comment, comments.color, comments.updated_at",  
+     @activities = Comment.paginate :page => params[:page], :select => "comments.user_id, comments.issue_id, comments.comment, comments.updated_at",  
      :conditions => ["follows.user_id = ? or comments.user_id = ?", @current_user.id, @current_user.id],
      :joins => "left outer join follows on comments.user_id = follows.follow_id or comments.user_id = #{@current_user.id}",
      :order => 'comments.updated_at DESC'
@@ -99,8 +103,8 @@ class UsersController < ApplicationController
       if @user.save
         
         # Send welcome email
-        @message = "Welcome to Gospelr!"
-        Notifier.contact(@user.email, "chris@gospelr.com", @message).deliver
+        @message = "Welcome to MayWeHelp!"
+        Notifier.contact(@user.email, "chris@maywehelp.com", @message).deliver
         
         session[:user_id] = @user.id
         

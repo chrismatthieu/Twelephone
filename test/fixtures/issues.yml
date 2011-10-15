@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  user_id: 1
+  title: MyString
+  description: MyText
+  offer: 1.5
+  status: 1
+
+two:
+  user_id: 1
+  title: MyString
+  description: MyText
+  offer: 1.5
+  status: 1

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Gospelr</title>
-  <meta name="keywords" content="gospelr, microblogging, bible, microblogs, gospel, jesus christ, church, twitter, online bible, bible online" />
-  <meta name="description" content="Bible Studying and Microblogging the Good News." />
+  <title>MayWeHelp</title>
+  <meta name="keywords" content="tech support" />
+  <meta name="description" content="Social Tech Support." />
 
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
@@ -12,7 +12,7 @@
   <link type="text/css" rel="stylesheet" href="/qtip/jquery.qtip.css" />
   <script type="text/javascript" src="/qtip/jquery.qtip.min.js"></script>
 
-  <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+  <!-- <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script> -->
 
 
 	<%= yield :head %>
@@ -32,7 +32,7 @@
 			<% end %>
 			<%= link_to @current_user.username.capitalize, "/" + @current_user.username  %> | 		
 
-			<%= link_to 'Bible', "/" %> |
+			<%= link_to 'Home', "/" %> |
 			<%= link_to 'Logout', '/logout' %><br/>
 			
 			<%= link_to 'Timeline', '/allfeed' %> | 
@@ -45,10 +45,6 @@
 			<%= link_to 'Login', '/login' %>
 		<% end %>
 		<br/>
-		<% if controller.controller_name != "verses" and controller.controller_name != "users" and controller.controller_name != "follows" %>
-			<br/><br/><br/>
-			<%# link_to image_tag("/assets/start-reading.png"), "/genesis/1/1"%>
-		<% end %>
 		
 		</p>
 	</div>
@@ -59,65 +55,6 @@
 
 	</div>
 
-<script type="text/javascript">
-$(document).ready(function() {
-	$("#drop").mouseenter( function() {
-		if($("#slider").css('top')=='-100px'){
-			$("#slider").animate({ 
-				top: "0px"
-				}, 500 );
-			$(this).fadeTo("slow",1)
-		}
-	});  
-	$("#sliderContent").mouseleave( function() {
-			$("#slider").animate({ 
-				top: "-100px"
-				}, 500 );
-			$("#drop").fadeTo("slow",0.7)
-	});
-	$("#drop").fadeTo("slow",0.7)
-});
-</script>
-
-
-	<div id="slider">
-		<div id="sliderContent">
-			<div id="topstuff">
-				<!-- <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="gospelr" >Tweet</a>
-				<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-				<iframe src="http://www.facebook.com/plugins/like.php?app_id=214563245242191&amp;href=http%3A%2F%2Fgospelr.com&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe> -->
-				<div id="toplogo">
-					<a href="/"><img src="/assets/gospelr.png" width="250"></a>
-				</div>
-				
-				<br/>
-				<center>
-					
-				<%= form_for :search, :url=>"/search", :html => {:class => 'search', :id => 'search'}, :method => "get" do |f| %>
-					<% 
-					if session[:searchterm].nil? 
-						session[:searchterm] = "Genesis 1:1"
-					end
-					%>
-					<%= f.text_field "searchtext", :value => session[:searchterm], :class => "header-top-search-box" %><%# f.hidden_field :bible_id, :value => bible.id %>
-					<%#text_field_with_auto_complete :text, :verse, :autocomplete => "off" %>
-					<%# submit_tag "Search"%>
-					<input type="submit" value="Search" name="commit" id="search-button" class="header-search-button"><br/>
-					<div class="search-text">Enter a verse or keywords (<a href="/search/John 3%3A16">John 3:16</a>, <a href="/search/marriage">marriage</a>, <a href="/search/Holy Spirit">Holy Spirit</a>)
-						| <%= link_to 'Genesis', "/genesis/1" %>
-						<% if false #logged_in? %>
-							| <%= link_to "Goto Bookmark", "/gotobookmark" %>
-						<% end %>
-					</div>
-				<% end %>
-				</center>
-			</div>
-		</div>
-		<div id="openCloseWrap">
-				<img id="drop" src="/assets/dropdownbar-ribbon.png" alt="open" />
-			</a>
-		</div>
-	</div>
 	
 	<!-- <script type="text/javascript">
 	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -132,7 +69,7 @@ $(document).ready(function() {
 	<div id="footer">
 		<br/>
 		<% time = Time.new %>
-		&copy; <%=time.year%> GetVocal, inc. - <%=link_to "About Us", "/about"%> - <%=link_to "Blog", "http://gospelr.tumblr.com"%>
+		&copy; <%=time.year%> MayWeHelp, inc. - <%=link_to "About Us", "/about"%> - <%=link_to "Blog", "http://maywehelp.tumblr.com"%>
 	</div>
 	
 	

@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
 
-  before_filter :login_required, :except => [:new, :create]
+  before_filter :login_required, :except => [:new, :create, :show]
   before_filter :admin_required, :only => [:index, :destroy]
+  before_filter :current_user, :only => [:show]
 
   # GET /users
   # GET /users.json

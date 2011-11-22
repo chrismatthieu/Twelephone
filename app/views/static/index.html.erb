@@ -4,3 +4,9 @@
 <br/>
 <p>Turn up your speakers, sign-in with your Twitter account, and start a conference call.</p>
 <!-- <p>You can also place calls to any North American phone numbers for free too!</p> -->
+<br/>
+<% if !@current_user %>
+<p align="center">
+	<a href="/auth/twitter"><%= image_tag "twitter_login.png", :width => "300" %></a>
+</p>
+<% end %>

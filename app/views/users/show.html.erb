@@ -1,5 +1,14 @@
 <br/><p id="notice"><%= notice %></p>
 
+<% content_for :head do  -%>
+	<link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/redmond/jquery-ui.css"/>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://s.phono.com/releases/0.2/jquery.phono.js"></script>
+	<script type="text/javascript" src="/javascripts/callme.js"></script>
+
+<% end %>
+
+
 <% if @user %>
 
 <% content_for :stylers do  -%>
@@ -10,14 +19,6 @@
 	}
 	
 </style>
-<% end %>
-
-<% content_for :head do  -%>
-	<link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/redmond/jquery-ui.css"/>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-	<script type="text/javascript" src="http://s.phono.com/releases/0.2/jquery.phono.js"></script>
-	<script type="text/javascript" src="/javascripts/callme.js"></script>
-
 <% end %>
 
 <center>
@@ -75,8 +76,31 @@
 <br/><br/>
 
 <% else %>
-<h1>User not found :(</h1>
-<div id="pagecontent">
-	<!-- Invite <%=params[:user]%> -->
-</div>
+
+	<% if @current_user and @isnumber == true%>
+	<h1>Shh, you found our Easter Egg :)</h1>
+		<center>
+			<script type="text/javascript">
+		  $("#wrapper").append(
+		   $("<div/>")
+		    .css("width","450px")
+		    .css("margin-left","auto")
+		    .css("margin-right","auto")
+		    .callme({
+		      apiKey: "C17D167F-09C6-4E4C-A3DD-2025D48BA243",
+		      buttonTextReady: "Call <%=@username%>",
+			  numberToDial: "<%=@username%>",
+		      username: "<%=@username%>",
+		      slideOpen:false,
+		      dialPad: false
+		    })
+		  )
+		 </script>
+		</center>
+	<% else %>
+		<h1>User not found :(</h1>
+		<div id="pagecontent">
+			<!-- Invite <%=params[:user]%> -->
+		</div>
+	<% end %>
 <% end %>

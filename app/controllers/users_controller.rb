@@ -18,17 +18,20 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    if params[:id] and isNumeric(params[:id])
-      @user = User.find(params[:id])
-    else
+    @username = params[:user]
+    
+    # if params[:id] and isNumeric(params[:id])
+    #   @user = User.find(params[:id])
+    # else
       @user = User.find_by_username(params[:user])
-    end
+    # end
     
     if @user
-      # Find contacts
+      @isnumber = false
+    else
+      @isnumber = isNumeric(@username.gsub("-", "").gsub(".", "").gsub(" ", ""))
     end 
     
-    @username = params[:user]
     
     respond_to do |format|
       format.html # show.html.erb

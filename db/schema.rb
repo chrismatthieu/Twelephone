@@ -11,32 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111014224054) do
-
-  create_table "comments", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "issue_id"
-    t.text     "comment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "follows", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "follow_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "issues", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "title"
-    t.text     "description"
-    t.float    "offer"
-    t.integer  "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20111028042653) do
 
   create_table "users", :force => true do |t|
     t.string   "username"
@@ -51,6 +26,13 @@ ActiveRecord::Schema.define(:version => 20111014224054) do
     t.boolean  "allowemail"
     t.string   "access_token"
     t.string   "access_secret"
+    t.string   "sip"
+    t.datetime "presence"
+    t.string   "backgroundurl"
+    t.string   "backgroundcolor"
+    t.string   "bio"
+    t.string   "location"
+    t.string   "url"
   end
 
 end

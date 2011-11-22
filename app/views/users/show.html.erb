@@ -1,70 +1,73 @@
 <br/><p id="notice"><%= notice %></p>
 
 <% if @user %>
-<h1><%= @user.username.capitalize %>'<%= "s" if @user.username[-1,1] != "s"%> Activity</h1><br/>
+
+<% content_for :stylers do  -%>
+<style>
+	body {
+		background: url(<%=@user.backgroundurl%>) 0px 0 no-repeat;
+		background-color: #<%=@user.backgroundcolor%>;
+	}
+	
+</style>
+<% end %>
+
+<% content_for :head do  -%>
+	<link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/redmond/jquery-ui.css"/>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://s.phono.com/releases/0.2/jquery.phono.js"></script>
+	<script type="text/javascript" src="/assets/callme.js"></script>
+
+<% end %>
+<center>
+	<script type="text/javascript">
+  $("#wrapper").append(
+   $("<div/>")
+    .css("width","450px")
+    .callme({
+      apiKey: "C17D167F-09C6-4E4C-A3DD-2025D48BA243",
+      buttonTextReady: "START TWELEPHONE CALL",
+      username: "<%=@username%>",
+      slideOpen:false,
+      dialPad: false
+    })
+  )
+ </script>
+</center>
 
 <div id="pagecontent">
 
-<div id="photobar">
-	<center>
-	<% if @user.photo %>	
-		<img src="<%= @user.photo %>" width="100" height="100" />
-	<% else %>
-		<%= gravatar_image_tag @user.email, :class => "gravatar" rescue ""%>
-	<% end %><br/>
-	<% if @current_user.id == @user.id %>
-		<span style="a:underline"><%= link_to 'Edit Profile', "/users/" + @current_user.username + "/edit" %> </span>
-	<% else %>
+	<div id="photobar">
 		<center>
-		<div id="userstatus">
-			
-			<% if @follow %>
-				<%= form_for :follow, :url=>{:controller=>"follows", :action=>"create", :id=>@user.id, :status=>'unfollow' }, :remote => true do |f| %>
-					<%= button_tag("Unfollow", :title=>"Unfollow " + @user.username.capitalize ) %>
-				<% end %>
-			<% else %>
-				<%= form_for :follow, :url=>{:controller=>"follows", :action=>"create", :id=>@user.id, :status=>'follow' }, :remote => true do |f| %>
-					<%= button_tag("Follow", :title=>"Follow " + @user.username.capitalize ) %>
-				<% end %>
-			<% end %>
-			
-		</div>
+		<% if @user.photo %>	
+			<!img src="<%= @user.photo %>" width="100" height="100" />
+		<% else %>
+			<%# gravatar_image_tag @user.email, :class => "gravatar" rescue ""%>
+		<% end %><br/>
+		<% if false #@current_user.id == @user.id %>
+			<span style="a:underline"><%= link_to 'Edit Profile', "/users/" + @current_user.username + "/edit" %> </span>
+		<% end %>
 		</center>
-	<% end %>
-	</center>
 	
-</div>
-
-<% @activities.each do |activity| %>
-
-	<a href="/issues/<%=activity.id%>">
-	<%= activity.title %></a>
-	</span>
 	
-	<%# if activity.comments %>
-	<% activity.comments.each do |comment| %>
-	
-	<div class="bubble">
-			<blockquote>
-				<p><%= comment.comment %></p><br /><br />
-			</blockquote>
-			<cite>Updated <%= time_ago_in_words comment.created_at %> ago</cite>
 	</div>
 	
-	<% end %>
+	
 
-<% end %>
 
 </div>
 
+
+
+
 <br />
-<p><center><%= will_paginate @activities, :page_links => false %></center></p>
+<p><center><%# will_paginate @activities, :page_links => false %></center></p>
 <br />
 <br/><br/>
 
 <% else %>
-<br/><br/><br/><br/>
 <h1>User not found :(</h1>
 <div id="pagecontent">
+	Invite <%=params[:user]%>
 </div>
 <% end %>

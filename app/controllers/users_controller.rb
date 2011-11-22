@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @users }
+      format.json { render :json => @users }
     end
   end
 
@@ -24,38 +24,17 @@ class UsersController < ApplicationController
     end
     
     if @user
-      @follow = Follow.find(:first, :conditions => ["user_id = ? and follow_id = ?", @current_user.id, @user.id])
-
-      # @activities = User.comments.paginate :page => params[:page], :per_page => 3
-      # @activities = Comment.paginate :page => params[:page], :conditions => ['user_id = ?', @user.id], :order => 'updated_at DESC'
-      @activities = Issue.paginate :page => params[:page], :conditions => ['user_id = ?', @user.id], :order => 'updated_at DESC'
+      # Find contacts
     end 
+    
+    @username = params[:user]
     
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @user }
+      format.json { render :json => @user }
     end
   end
   
-  def allfeed     
-     
-     # @activities = Comment.paginate :page => params[:page], :select => "comments.user_id, comments.issue_id, comments.comment, comments.updated_at",  
-     # :order => 'comments.updated_at DESC'
-     
-     @activities = Issue.paginate :page => params[:page], :order => 'updated_at DESC'
-     
-          
-  end
-
-  def feed     
-     
-     @activities = Comment.paginate :page => params[:page], :select => "comments.user_id, comments.issue_id, comments.comment, comments.updated_at",  
-     :conditions => ["follows.user_id = ? or comments.user_id = ?", @current_user.id, @current_user.id],
-     :joins => "left outer join follows on comments.user_id = follows.follow_id or comments.user_id = #{@current_user.id}",
-     :order => 'comments.updated_at DESC'
-          
-  end
-
   # GET /users/new
   # GET /users/new.json
   def new
@@ -63,7 +42,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @user }
+      format.json { render :json => @user }
     end
   end
 
@@ -103,16 +82,16 @@ class UsersController < ApplicationController
       if @user.save
         
         # Send welcome email
-        @message = "Welcome to MayWeHelp!"
-        Notifier.contact(@user.email, "chris@maywehelp.com", @message).deliver
+        @message = "Welcome to Twlephone!"
+        Notifier.contact(@user.email, "chris@twelephone.com", @message).deliver
         
         session[:user_id] = @user.id
         
-        format.html { redirect_to "/", notice: 'User was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user }
+        format.html { redirect_to "/", :notice => 'User was successfully created.' }
+        format.json { render :json => @user, :status => :created, :location => @user }
       else
         format.html { render action: "new" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render :json => @user.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -129,11 +108,11 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to @user, :notice => 'User was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render :json => @user.errors, :status => :unprocessable_entity }
       end
     end
   end

@@ -1,0 +1,316 @@
+<html>
+    <head>
+        <meta http-equiv="PRAGMA" content="NO-CACHE" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link href="/assets/telephone.css" rel="stylesheet" type="text/css" />
+		<title>Telephone</title>
+
+		<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+	    <script src="http://s.phono.com/releases/0.2/jquery.phono.js"></script>
+	    
+	    <script type="text/javascript">
+			var phono;
+			var call;
+			
+			location.querystring = (function() {
+
+			    // The return is a collection of key/value pairs
+
+			    var queryStringDictionary = {};
+
+			    // Gets the query string, starts with '?'
+
+			    var querystring = decodeURI(location.search);
+
+			    // document.location.search is empty if no query string
+
+			    if (!querystring) {
+			        return {};
+			    }
+
+			    // Remove the '?' via substring(1)
+
+			    querystring = querystring.substring(1);
+
+			    // '&' seperates key/value pairs
+
+			    var pairs = querystring.split("&");
+
+			    // Load the key/values of the return collection
+
+			    for (var i = 0; i < pairs.length; i++) {
+			        var keyValuePair = pairs[i].split("=");
+			        queryStringDictionary[keyValuePair[0]]
+			                = keyValuePair[1];
+			    }
+
+			    // toString() returns the key/value pairs concatenated
+
+			    queryStringDictionary.toString = function() {
+
+			        if (queryStringDictionary.length == 0) {
+			            return "";
+			        }
+
+			        var toString = "?";
+
+			        for (var key in queryStringDictionary) {
+			            toString += key + "=" +
+			                queryStringDictionary[key];
+			        }
+
+			        return toString;
+			    };
+
+			    // Return the key/value dictionary
+
+			    return queryStringDictionary;
+			})();
+			
+			function placeCall()
+			{
+			var dialString = document.getElementById("dialstring");
+			var destString = document.getElementById("destinationTxt");
+			var didString = document.getElementById("did");
+			if(dialString.value.substring(0,1) == '1')
+			{
+				didString.value = dialString.value;
+			}
+			else
+			{
+				didString.value = '1' + dialString.value;
+			}
+		
+			// Determine SIP or PSTN
+			if(dialString.value.substring(0,1) == 's') 
+			{
+				destString.value = dialString.value;
+			}
+			else
+			{
+				destString.value = "app:9991443313";
+			}
+			makeCall();
+			}
+			
+		    $(document).ready(function(){
+		    	phono = $.phono({
+		    	  apiKey: "f12dc371538c973b3cb200b43b6c594d",
+		    	  onReady: function() {
+					$("#status").html("sip:" + this.sessionId);
+			
+					<%if @did %>
+                    
+					// if (location.querystring["phone"]){
+						// var dialString = document.getElementById("dialstring");
+						// dialString.value = location.querystring["phone"];
+						$("a.callme").addClass("phono-ready").text("Call");
+						$(".digit-hldr").slideDown();
+						$("a.callme").hide();
+			    		$("a.hangup").show().css("display","block");
+									    		
+						// placeCall();
+						makeCall();
+						
+					<% else %>
+						$.ajax({ url: '/facebook/update_phonoaddress', data: { 'mysession': $('#sessionId').val()}, type: 'post' })
+					
+						
+					// } else {
+			
+						$("a.callme").addClass("phono-ready").text("Call");
+						$("a.answer").hide();
+			    		$("a.reject").hide();
+		    		
+						if( ! this.audio.permission() ){
+						                this.audio.showPermissionBox();
+			             }
+		
+					// };
+					<% end %>
+		
+		    	  },
+				    phone: {
+				  	onConnect: function(event) {
+				  	  $("#sessionId").val(event.phone.sessionId());
+				
+				  		if( ! event.phone.flashPermissionState() ){
+				  			event.phone.showFlashPermissionBox();
+				  		}
+				  	},
+				  	onDisconnect: function(event) {
+				  		$(document).trigger("callHangUp");
+				  	},
+					onIncomingCall: function(event) {
+					  call = event.call;
+						$("a.answer").show().css("display","block");
+						$("a.reject").show().css("display","block");
+			    		$("a.hangup").hide();
+			    		$("a.callme").hide();
+
+						window.focus();
+					}
+				  }
+				
+		    	});
+		    	
+		    	$("a.callme").click(function(){
+		    		$(".digit-hldr").slideDown();
+		    		$(this).hide();
+		    		$("a.hangup").show().css("display","block");
+		    		placeCall();
+		    		return false;
+		    	});
+		    	
+		    	$("a.hangup").click(function(){
+		    		$(document).trigger("callHangUp");
+		    		return false;
+		    	});
+		    	
+		    	$("a.headset").click(function(){
+		    		$(this).toggleClass("checked");
+		    		$(this).parent().toggleClass("headset-enabled");
+		    		( $(this).hasClass("headset-enabled") ) ? call.headset(true) : call.headset(false);
+		    		return false;
+		    	});
+
+		    	$("a.answer").click(function(){
+		    		$(".digit-hldr").slideDown();
+		    		$(this).hide();
+		    		$("a.hangup").show().css("display","block");
+		    		$("a.reject").hide();
+		    		(call) ? call.answer() : call = null;
+		    		return false;
+		    	});
+
+		    	$("a.reject").click(function(){
+		    		$(this).hide();
+		    		(call) ? call.hangup() : call = null;
+		    		$("a.answer").hide();
+		    		$("a.hangup").hide();
+		    		$("a.callme").show();
+		    		return false;
+		
+		    	});
+		    	
+		    	$(document).bind("callHangUp", function(){
+		    		(call) ? call.hangup() : call = null;
+		    		$(".digit-hldr").slideUp();
+		    		$("a.hangup").hide();
+		    		$("a.answer").hide();
+		    		$("a.reject").hide();
+		    		$("a.callme").show();
+		    	});
+		    	
+		    	$(".digit").click(function(){
+		    		var thisDigit = $(this).find(".number").text();
+		    		call.digit(thisDigit);
+		    		return false;
+		    	});
+		
+				// clear input on focus
+				$('.clearMeFocus').focus(function(){
+				if($(this).val()==this.defaultValue){
+				$(this).val('');
+				}
+				});
+				
+				// if field is empty afterward, add text again
+				$('.clearMeFocus').blur(function(){
+				if($(this).val()==''){
+				$(this).val(this.defaultValue);
+				}
+				});
+		
+
+		    })
+		
+		    function makeCall() {
+			
+				if ( $("#destinationTxt").val().substring(0,1) == 's' || location.querystring["live"] == '1'){
+	                numberToDial = $("#destinationTxt").val();
+				} else {
+					numberToDial = $("#did").val();
+				};
+				
+                call = phono.phone.dial(numberToDial, {
+					headers: [
+					         {
+					           name:"numbertodial",
+					           value:$("#did").val()
+					         }
+					],
+                	tones: true,
+                    onAnswer: function(event) {	
+						
+                    },
+                    onHangup: function() {
+						$(document).trigger("callHangUp");
+                    },
+                    onDisconnect: function() {
+						$(document).trigger("callHangUp");						
+                    }
+                });
+            };
+
+		</script>
+    </head>
+    <body>
+	
+		<div id="phono">           
+			<div id="dialform">
+			<center><span id="status"></span></center>
+	        <center><form name="dialer"> 
+				<!-- <input type="text" id="dialstring" value="Number/SIP Address" class="clearMeFocus">
+				<input type="hidden" id="destinationTxt" value="" />
+				<input type="hidden" id="did" value="" /> -->
+				
+				<input type="text" id="dialstring" value="<%=@display-%>">
+				<input type="hidden" id="destinationTxt" value="<%=@phone%>" />
+				<input type="hidden" id="did" value="<%=@did%>" />
+				
+	        </form></center>
+			</div>
+			<a class="callme" href="#">Loading...</a>
+			<a class="hangup" href="#">End Call</a>
+			<a class="answer" href="#">Answer</a>
+			<a class="reject" href="#">Reject</a>
+			<div class="digit-hldr">
+			    <div class="headset-hldr">
+			    	<a class="headset" href="#">Wearing a headset?</a>
+			    </div>
+			    <a class="digit 1" href="#"><span class="number">1</span></a>
+			    <a class="digit middle 2" href="#"><span class="number">2</span><br><span class="abc">ABC</span></a>
+			    <a class="digit 3" href="#"><span class="number">3</span><br><span class="abc">DEF</span></a>
+			
+			    <a class="digit 4" href="#"><span class="number">4</span><br><span class="abc">GHI</span></a>
+			    <a class="digit middle 5" href="#"><span class="number">5</span><br><span class="abc">JKL</span></a>
+			    <a class="digit 6" href="#"><span class="number">6</span><br><span class="abc">MNO</span></a>
+			
+			    <a class="digit 7" href="#"><span class="number">7</span><br><span class="abc">PQRS</span></a>
+			    <a class="digit middle 8" href="#"><span class="number">8</span><br><span class="abc">GHI</span></a>
+			    <a class="digit 9" href="#"><span class="number">9</span><br><span class="abc">WXYZ</span></a>
+			
+			    <a class="digit bottom-left *" href="#"><span class="star">*</span></a>
+			    <a class="digit middle 0" href="#"><span class="number">0</span><br><span class="abc">+</span></a>
+			    <a class="digit bottom-right #" href="#"><span class="number">#</span></a>
+			    <br class="clearfix">
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-119008-17']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+
+		</script>
+		
+    </body>
+</html>

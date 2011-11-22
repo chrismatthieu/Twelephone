@@ -46,8 +46,8 @@ class SessionsController < ApplicationController
         
       elsif service_route == 'twitter'
         omniauth['user_info']['email'] ? @authhash[:email] =  omniauth['user_info']['email'] : @authhash[:email] = ''
-        omniauth['user_info']['nickname'] ? @authhash[:name] =  omniauth['user_info']['nickname'] : @authhash[:name] = ''
-        omniauth['user_info']['name'] ? @authhash[:name] =  omniauth['user_info']['name'] : @authhash[:name] = ''
+        omniauth['user_info']['nickname'] ? @authhash[:nickname] =  omniauth['user_info']['nickname'] : @authhash[:nickname] = ''
+        # omniauth['user_info']['name'] ? @authhash[:name] =  omniauth['user_info']['name'] : @authhash[:name] = ''
         omniauth['uid'] ? @authhash[:uid] = omniauth['uid'].to_s : @authhash[:uid] = ''
         omniauth['provider'] ? @authhash[:provider] = omniauth['provider'] : @authhash[:provider] = ''        
 
@@ -55,6 +55,11 @@ class SessionsController < ApplicationController
         
         omniauth['credentials']['token'] ? @authhash[:token] = omniauth['credentials']['token'] : @authhash[:token] = ''        
         omniauth['credentials']['secret'] ? @authhash[:secret] = omniauth['credentials']['secret'] : @authhash[:secret] = ''        
+        omniauth['extra']['user_hash']['profile_background_image_url'] ? @authhash[:backgroundimage] =  omniauth['extra']['user_hash']['profile_background_image_url'] : @authhash[:backgroundimage] = ''
+        omniauth['extra']['user_hash']['profile_background_color'] ? @authhash[:backgroundcolor] =  omniauth['extra']['user_hash']['profile_background_color'] : @authhash[:backgroundcolor] = ''
+        omniauth['extra']['user_hash']['description'] ? @authhash[:bio] =  omniauth['extra']['user_hash']['description'] : @authhash[:bio] = ''
+        omniauth['extra']['user_hash']['location'] ? @authhash[:location] =  omniauth['extra']['user_hash']['location'] : @authhash[:location] = ''
+        omniauth['extra']['user_hash']['url'] ? @authhash[:url] =  omniauth['extra']['user_hash']['url'] : @authhash[:url] = ''
                         
       else        
         # debug to output the hash that has been returned when adding new services
@@ -72,7 +77,7 @@ class SessionsController < ApplicationController
           session['access_secret'] = auth.access_secret
           
           # redirect_to "/feed", :notice => "Logged in"
-          redirect_to "/", :notice => "Logged in"
+          redirect_to "/" + auth.username #, :notice => "Logged in"
         else
 
           # puts omniauth['uid']
@@ -85,7 +90,7 @@ class SessionsController < ApplicationController
           # puts omniauth['credentials']['secret']
 
           @user = User.new
-          @user.username = @authhash[:name]
+          @user.username = @authhash[:nickname]
           @user.email = @authhash[:email]
           @user.provider = @authhash[:provider]
           @user.uid = @authhash[:uid]
@@ -94,20 +99,25 @@ class SessionsController < ApplicationController
           @user.allowemail = true
           @user.access_token = @authhash[:token]  
           @user.access_secret = @authhash[:secret]  
+          @user.backgroundurl = @authhash[:backgroundimage]  
+          @user.backgroundcolor = @authhash[:backgroundcolor]  
+          @user.bio = @authhash[:bio]  
+          @user.bio = @authhash[:location]  
+          @user.bio = @authhash[:url]  
 
           @user.save
           
           if !@user.email.nil?
             # Send welcome email
-            @message = "Welcome to MayWeHelp!"
-            Notifier.contact(@authhash[:email], "chris@maywehelp.com", @message).deliver
+            @message = "Welcome to Twlephone!"
+            Notifier.contact(@authhash[:email], "chris@twelephone.com", @message).deliver
           end 
           
           session[:user_id] = @user.id      
           session['access_token'] = @user.access_token
           session['access_secret'] = @user.access_secret
           # redirect_to "/feed", :notice => "User was successfully created."
-          redirect_to "/", :notice => "User was successfully created."
+          redirect_to "/" + @user.username #, :notice => "User was successfully created."
 
         end
         
@@ -119,7 +129,7 @@ class SessionsController < ApplicationController
         user = User.find_by_username(params[:username])
         if user && user.authenticate(params[:password])
           session[:user_id] = user.id
-          redirect_to "/feed", :notice => "Logged in"
+          redirect_to "/" + user.username #, :notice => "Logged in"
         else
           flash.now.alert = "Invalid email or password"
           render "new"

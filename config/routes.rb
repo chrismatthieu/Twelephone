@@ -1,46 +1,29 @@
-Maywehelp::Application.routes.draw do
-
-
-  resources :issues
-
-  match 'comments/create' => 'comments#create'
+Twlephono::Application.routes.draw do
 
   # Omniauth pure
-  match "/signin" => "sessions#signin"
-  match "/signout" => "sessions#signout"
+  # match "/signin" => "sessions#signin"
+  # match "/signout" => "sessions#signout"
 
   match '/auth/:service/callback' => 'sessions#create' 
   match '/auth/failure' => 'sessions#failure'
   match '/auth/:provider' => "application#omniauth"
-  match '/users/password' => "users#password"
-  match '/feed' => "users#feed"
-  match '/allfeed' => "users#allfeed"
-
+  # match '/users/password' => "users#password"
   
   resources :users
   resources :sessions
-  # resources :comments
-  
-  resources :comments do
-    collection do
-      put :update_attribute_on_the_spot_in_tree
-    end
-  end  
-  resources :follows
-
-  match ':user/following' => 'follows#index', :view => 'following'
-  match ':user/followers' => 'follows#index', :view => 'followers'
 
   match '/login' => 'sessions#new'
   match '/logout' => 'sessions#destroy'
-  match '/password/:id' => 'users#password'
+  # match '/password/:id' => 'users#password'
   match '/about' => 'static#about'
   
-  match '/search/:id' => 'issues#search'
-  match '/search' => 'issues#search'
+  match '/api/address/:user' => "api#address"
+
+  match '/telephone(/:id)' => "static#telephone"
+
   
   match ':user' => 'users#show'
-
+  
 
 
   # The priority is based upon order of creation:

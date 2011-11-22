@@ -6,8 +6,3 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
-//= require jquery.treeTable
-//= require jquery.jeditable.mini
-//= require jquery.jeditable.datepicker
-//= require on_the_spot_in_tree

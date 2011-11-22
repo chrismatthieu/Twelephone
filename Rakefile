@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Maywehelp::Application.load_tasks
+Twlephono::Application.load_tasks

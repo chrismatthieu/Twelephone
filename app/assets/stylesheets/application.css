@@ -62,7 +62,7 @@ table {
 
 /* Global settings */
 body {
-	font: 59.5%/1.4 "ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2",Cambria,Georgia, Times, serif;
+	font: 100%/1.4 "ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2",Cambria,Georgia, Times, serif;
 	background: #fff;
 	text-align: center;
 }
@@ -78,7 +78,9 @@ html, body {
 
 /* layout */
 #wrapper {
-	font-size:1.2em;
+	font-size:2em;
+	line-height: 35px;
+    
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
@@ -114,7 +116,7 @@ html, body {
     padding: 0 90px 0 90px;
     width: 780px;
 	text-align: left;
-	background: url(/assets/pagetop.gif) 90px 0 no-repeat;
+/*	background: url(/assets/pagetop.gif) 90px 0 no-repeat;*/
 }
 .page button {
 	font-family: Helvetica,Arial,sans-serif;
@@ -321,26 +323,36 @@ a img {
   border: 0; 
 }
 a {
-  color: #92BD54;
- /* font-weight: bold;*/ 
+  color: #4BCAF0;
+/*  font-weight: bold; */
+
 }
 
 a:hover {
-  color: #F9BB3B;
+  color: #000;
 /*  font-weight: bold; */
-  background-color: #FFFFCC; 
-}
-.charge {
-	position: relative;
-	bottom: 0.5em;
-	color: #92BD54;
-	font-size: 0.5em;
+  background-color: #4BCAF0; 
 }
 
 #leftbar {
 	position:absolute;
 	left:5px;
 	margin-top: 15px;	
+}
+#rightbar {
+	position:absolute;
+	right:5px;
+	margin-top: 15px;	
+}
+#topbar {
+	color: #4BCAF0;
+	background-color: #000;   /*#4BCAF0*/
+	width: 100%;
+	height: 60px;
+	display: block;
+	text-align: center;
+	position: relative;
+	font-size:3em;
 }
 
 

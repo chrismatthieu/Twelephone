@@ -1,75 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MayWeHelp</title>
-  <meta name="keywords" content="tech support" />
-  <meta name="description" content="Social Tech Support." />
+  <title>Twlephone</title>
+  <meta name="keywords" content="phone" />
+  <meta name="description" content="Telephone 2.0" />
 
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 
-  <link type="text/css" rel="stylesheet" href="/qtip/jquery.qtip.css" />
-  <script type="text/javascript" src="/qtip/jquery.qtip.min.js"></script>
+  <!-- <link type="text/css" rel="stylesheet" href="/qtip/jquery.qtip.css" />
+  <script type="text/javascript" src="/qtip/jquery.qtip.min.js"></script> -->
 
   <!-- <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script> -->
+
+	<script language="javascript" type="text/javascript">
+	<!--
+	function popitup(url) {
+		var left = (screen.width/2)-(275/2);
+		var top = (screen.height/2)-(375/2);
+		newwindow=window.open(url,'name', 'height=375,width=275,toolbars=no,menubar=no,location=no,scrollbars=no,resizable=yes,status=no,top='+top+', left='+left);		
+		if (window.focus) {newwindow.focus()}
+		return false;
+	}
+
+	// -->
+	</script>
 
 
 	<%= yield :head %>
 	<%= yield :stylers %>
 
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-2483685-21']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+	
 </head>
+<!-- blue = 4BCAF0 -->
 <body>
-	<div id="leftbar">
-		<p align="left">
-		<br/><br/>
+	<!div id="leftbar">
+	<div id="topbar"><a href="/"><img src="/assets/twelephone4blacklogo.png" height="60" align="left"></a></div>
+
+	<% if controller.controller_name == "static" %>
+		<img src="/assets/coolphone.gif" align="left">
+	<% end %>
+	<div id="wrapper" class="page">
+		<p id="notice"><%= alert %></p>
+		<br/>
+		<p align="right">
 		<% if @current_user %>
-<center>
 			<% if @current_user.photo %>	
-				<img src="<%= @current_user.photo %>" width="15" height="15" />
+				<img src="<%= @current_user.photo %>" width="25" height="25" />
 			<% else %>
-				<%= gravatar_image_tag @current_user.email, :class => "gravatar", :width => "15" rescue ""%> 
+				<%= gravatar_image_tag @current_user.email, :class => "gravatar", :width => "50" rescue ""%> 
 			<% end %>
 			<%= link_to @current_user.username.capitalize, "/" + @current_user.username  %> | 		
-
-			<%= link_to 'Home', "/" %> |
 			<%= link_to 'Logout', '/logout' %><br/>
-			
-			<%= link_to 'Timeline', '/allfeed' %> | 
-			<%= link_to 'Following', '/' + @current_user.username + '/following' %> |
-			<%= link_to 'Followers', '/' + @current_user.username + '/followers' %> 
-</center>
+			<%#button_to_function "Launch Dialpad", "popitup('/telephone')" %>
 		<% else %>
-			<%= link_to 'Home', "/" %> |
-			<%= link_to 'Register', new_user_path %> | 
-			<%= link_to 'Login', '/login' %>
+			<a href="/auth/twitter"><%= image_tag "twitter_login.png" %></a>
 		<% end %>
-		<br/>
+		</p><br/>
 		
-		</p>
-	</div>
-	
-	<div id="wrapper" class="page">
-
-<%= yield %>
+		<%= yield %>
 
 	</div>
 
-	
-	<!-- <script type="text/javascript">
-	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-	</script>
-	<script type="text/javascript">
-	try {
-	var pageTracker = _gat._getTracker("UA-2483685-13");
-	pageTracker._trackPageview();
-	} catch(err) {}</script> -->
 	
 	<div id="footer">
 		<br/>
 		<% time = Time.new %>
-		&copy; <%=time.year%> MayWeHelp, inc. - <%=link_to "About Us", "/about"%> - <%=link_to "Blog", "http://maywehelp.tumblr.com"%>
+		&copy; <%=time.year%> Twelephone - <%=link_to "About Us", "/about"%> <!-- - <%=link_to "Blog", "http://twelephone.tumblr.com"%> -->
 	</div>
 	
 	

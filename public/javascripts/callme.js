@@ -206,7 +206,7 @@
 				           value: settings.username
 				         }],
             	onAnswer: function(event) {	
-				    phoneBtn.text("Hangup");
+				    phoneBtn.text("CLICK TO HANGUP");
             	},
             	onHangup: function() {
 				    hangUpCall(settings, phone);

@@ -2,3 +2,5 @@
 
 Hello, meet the world's first social telephone. Twelephone is integrated with your Twitter account 
 and allows you to start group conference calls or party lines to speak to your fans for free! 
+
+Twelephone is powered by Voxeo's Javascript Phone API called Phono (http://phono.com) and Tropo (http://tropo.com) cloud communications platform.

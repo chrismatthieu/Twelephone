@@ -39,8 +39,8 @@ Twlephono::Application.configure do
      OpenID.fetcher.ca_file = "#{Rails.root}/config/ca-bundle.crt"
 
      # providers with id/secret, you need to sign up for their services (see below) and enter the parameters here
-     provider :facebook, '214563245242191', '576ba383aaf5335c528c9c603ec74828'
-     provider :twitter, 'MirwMXxnomdhnywG6ynag', 'keUu5ggHjmGL40YsRZjgIeIGjeswjA9E4KZJLfP9k'
+     # provider :facebook, '214563245242191', '576ba383aaf5335c528c9c603ec74828'
+     provider :twitter, 'MPXN7K8BZKsOVFQGk2k9g', 'yahzdhxfTibHIkBVyP6Q9twcQ8H9wf1pTG8undOE0'
 
      # generic openid
      provider :openid, OpenID::Store::Filesystem.new('./tmp'), :name => 'openid'

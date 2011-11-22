@@ -13,7 +13,7 @@
 			numbertodial: "app:9996162282"
     	};
     	
-    	if(options) {
+    	if(options) { 
 	    	//lowercase all options passed in
 	    	$.each(options, function(k,v){
 	    		callMeOptions[k.toLowerCase()] = v;

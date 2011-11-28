@@ -7,6 +7,7 @@
 			apikey : "",
 			dialpad: true,
 			togglemic: true,
+			togglemute: true,
 			slideopen: true,
 			buttontext: "loading...",
 			buttontextready: "Call me",
@@ -54,6 +55,11 @@
       		phone.find(".phono-mic-toggle").bind({
       			click: function(){
       				(this.checked)? phono.phone.headset(true): phono.phone.headset(false);
+      			}
+      		});
+      		phone.find(".phono-mute-toggle").bind({
+      			click: function(){
+      				(this.checked)? call.mute(true): call.mute(false);
       			}
       		});
       		
@@ -121,6 +127,21 @@
     				
     			if(settings.slideopen)
     				micToggle.css("display","none");
+    		}
+
+    		if ( settings.togglemute ){
+    			var muteToggle = $("<div/>")
+    				.addClass("phono-mute-toggle-hldr")
+    				.css({
+    					"margin":"5px 0",
+    					"font-size":"75%",
+    					"text-align":"center"
+    				})
+    				.html("<input class='phono-mute-toggle' type='checkbox'/> Mute?")
+    				.appendTo(phoneContent);
+    				
+    			if(settings.slideopen)
+    				muteToggle.css("display","none");
     		}
     		
     		if( settings.dialpad ){
@@ -196,6 +217,8 @@
     		
     		if( settings.togglemic && settings.slideopen )
     			phone.find(".phono-mic-toggle-hldr").slideDown();
+    		if( settings.togglemute && settings.slideopen )
+    			phone.find(".phono-mute-toggle-hldr").slideDown();
     		if( settings.dialpad && settings.slideopen )
     			phone.find(".phono-digit-hldr").slideDown();
     			
@@ -226,6 +249,8 @@
     		
     		if( settings.togglemic && settings.slideopen )
     			phone.find(".phono-mic-toggle-hldr").slideUp();
+    		if( settings.togglemute && settings.slideopen )
+    			phone.find(".phono-mute-toggle-hldr").slideUp();
     		if( settings.dialpad && settings.slideopen )
     			phone.find(".phono-digit-hldr").slideUp();
     	}

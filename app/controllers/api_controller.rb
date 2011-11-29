@@ -9,7 +9,7 @@ class ApiController < ApplicationController
       format.html # show.html.erb
       format.json { 
         if @address
-          render :json => '{"username" : "<%=@address.username%>", "sip" : "<%=@address.sip%>"}', :status => 200
+          render :json => '{"username" : "' + @address.username + '", "sip" : "' + @address.sip + '"}', :status => 200
         else
           render :json => '{"error" : "NotFound", "message" : "User not found."}', :status => :not_found 
         end

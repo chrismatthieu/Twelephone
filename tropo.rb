@@ -8,13 +8,16 @@ require 'rest-client'
 log "user=" + @username
 log "myuser=" + @myusername
 
-if @username == @myusername
-  @getorg = RestClient.get 'http://twelephone.com/api/address/' + @username + '.json'
-  @getorgdata = JSON.parse(@getorg)
-  if @getorgdata["sip"]
-     log "sip=" + @getorgdata["sip"]
-  end
-end
+@getorg = RestClient.get 'http://twelephone.com/api/address/' + @username + '.json'
+@getorgdata = JSON.parse(@getorg)
+if @getorgdata["sip"]
+   log "jabber=" + @getorgdata["sip"]
+end   
+
+message @myusername + ' joined twelephone call', {
+       :to => @getorgdata["sip"],
+       :network => "JABBER"}     
+
 
 if @username.nil?
   @username = "anonymous_user"
@@ -29,5 +32,11 @@ conference @confid , {
   :playTones => true,
   :onChoice => lambda { |event| 
         say("Disconnecting")    
-   }}
+   },
+   :onHangup => lambda { |event|
+           message @myusername + ' left twelephone call', {
+                  :to => @getorgdata["sip"],
+                  :network => "JABBER"}     
+           
+    }}
 say "We hope you had fun, call back soon!"

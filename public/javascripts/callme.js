@@ -89,7 +89,13 @@
 					onDisconnect: function(event) {
 				    	hangUpCall(settings, phone);
 					}
-				}
+				},
+				messaging: {
+				    onMessage: function(event) {
+				       var message = event.message;
+				       alert("Message from: " + message.from + "\n" + message.body);
+				    }
+				  }
       		});
     		
     	});

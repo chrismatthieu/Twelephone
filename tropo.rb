@@ -9,7 +9,7 @@ log "user=" + @username
 log "myuser=" + @myusername
 
 if @username == @myusername
-  @getorg = RestClient.get'http://twelephone.com/api/address/' + @username + '.json'
+  @getorg = RestClient.get 'http://twelephone.com/api/address/' + @username + '.json'
   @getorgdata = JSON.parse(@getorg)
   if @getorgdata["sip"]
      log "sip=" + @getorgdata["sip"]

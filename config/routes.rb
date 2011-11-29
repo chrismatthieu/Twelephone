@@ -18,6 +18,7 @@ Twlephono::Application.routes.draw do
   match '/about' => 'static#about'
   
   match '/api/address/:user' => "api#address"
+  match '/api/update_phonoaddress' => "api#update_phonoaddress"
 
   match '/telephone(/:id)' => "static#telephone"
 

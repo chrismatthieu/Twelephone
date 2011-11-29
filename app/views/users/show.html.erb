@@ -5,75 +5,57 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 	<script type="text/javascript" src="http://s.phono.com/releases/0.2/jquery.phono.js"></script>
 	<script type="text/javascript" src="/javascripts/callme.js"></script>
-
 <% end %>
 
 
 <% if @user %>
-
-<% content_for :stylers do  -%>
-<style>
-	body {
-		background: url(<%=@user.backgroundurl%>) 0px 0 no-repeat;
-		background-color: #<%=@user.backgroundcolor%>;
-	}
+	<% content_for :stylers do  -%>
+	<style>
+		body {
+			background: url(<%=@user.backgroundurl%>) 0px 0 no-repeat;
+			background-color: #<%=@user.backgroundcolor%>;
+		}
 	
-</style>
+	</style>
 <% end %>
 
-<center>
-	<script type="text/javascript">
-  $("#wrapper").append(
-   $("<div/>")
-    .css("width","450px")
-    .css("margin-left","auto")
-    .css("margin-right","auto")
-    .callme({
-      apiKey: "C17D167F-09C6-4E4C-A3DD-2025D48BA243",
-      buttonTextReady: "CLICK TO CALL",
-      username: "<%=@username%>",
-      slideOpen:false,
-      dialPad: false
-    })
-  )
- </script>
-</center>
+<% if @current_user %>
 
-<div id="pagecontent">
+	<center>
+		<script type="text/javascript">
+	  $("#wrapper").append(
+	   $("<div/>")
+	    .css("width","450px")
+	    .css("margin-left","auto")
+	    .css("margin-right","auto")
+	    .callme({
+	      apiKey: "C17D167F-09C6-4E4C-A3DD-2025D48BA243",
+	      buttonTextReady: "CLICK TO CALL",
+	      username: "<%=@username%>",
+	      myusername: "<%=@current_user.username%>",
+	      slideOpen:false,
+	      dialPad: false
+	    })
+	  )
+	 </script>
+	</center>
 
-
-	<div id="photobar">
-		<center>
-		<% if @user.photo %>	
-			<!img src="<%= @user.photo %>" width="100" height="100" />
-		<% else %>
-			<%# gravatar_image_tag @user.email, :class => "gravatar" rescue ""%>
-		<% end %><br/>
-		<% if false #@current_user.id == @user.id %>
-			<span style="a:underline"><%= link_to 'Edit Profile', "/users/" + @current_user.username + "/edit" %> </span>
-		<% end %>
-		</center>
-	
-	
-	</div>
-	
-<center>
-	<div><br/>
-	   <a href="https://twitter.com/share" class="twitter-share-button"	data-count="none"
-		      data-text="Join me now on a social twelephone call!">Tweet</a>
-	</div>
-</center>	
+	<center>
+		<div><br/>
+		   <a href="https://twitter.com/share" class="twitter-share-button"	data-count="none"
+			      data-text="Join me now on a social twelephone call!">Tweet</a>
+		</div>
+	</center>	
 
 
-</div>
+<% else %>
 
+	<p align="center">
+		<a href="/auth/twitter"><%= image_tag "twitter_login.png", :width => "300" %></a>
+	</p>
 
+<% end %>
 
-
-<br />
-<p><center><%# will_paginate @activities, :page_links => false %></center></p>
-<br />
-<br/><br/>
 
 <% else %>
 

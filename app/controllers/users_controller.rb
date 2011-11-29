@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @username = params[:user]
+    session[:target] = @username
     
     # if params[:id] and isNumeric(params[:id])
     #   @user = User.find(params[:id])

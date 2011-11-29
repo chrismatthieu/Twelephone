@@ -113,7 +113,7 @@
 						makeCall();
 						
 					<% else %>
-						$.ajax({ url: '/facebook/update_phonoaddress', data: { 'mysession': $('#sessionId').val()}, type: 'post' })
+						$.ajax({ url: '/facebook/update_phonoaddress', data: { 'mysession': this.sessionId}, type: 'post' })
 					
 						
 					// } else {

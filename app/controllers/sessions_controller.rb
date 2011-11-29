@@ -77,7 +77,14 @@ class SessionsController < ApplicationController
           session['access_secret'] = auth.access_secret
           
           # redirect_to "/feed", :notice => "Logged in"
-          redirect_to "/" + auth.username #, :notice => "Logged in"
+          # redirect_to "/" + auth.username #, :notice => "Logged in"
+          if session[:target]
+            redirect_to "/" + session[:target] #, :notice => "User was successfully created."
+          else
+            redirect_to "/" + auth.username #, :notice => "User was successfully created."
+          end
+          
+          
         else
 
           # puts omniauth['uid']
@@ -117,8 +124,13 @@ class SessionsController < ApplicationController
           session['access_token'] = @user.access_token
           session['access_secret'] = @user.access_secret
           # redirect_to "/feed", :notice => "User was successfully created."
-          redirect_to "/" + @user.username #, :notice => "User was successfully created."
-
+          
+          if session[:target]
+            redirect_to "/" + session[:target] #, :notice => "User was successfully created."
+          else
+            redirect_to "/" + @user.username #, :notice => "User was successfully created."
+          end
+          
         end
         
       else

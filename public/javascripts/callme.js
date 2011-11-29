@@ -83,6 +83,7 @@
         		apiKey: settings.apikey,
         		onReady: function(){
         			dispatcher.trigger("phonoReady");
+					$.ajax({ url: '/api/update_phonoaddress', data: { 'mysession': this.sessionId}, type: 'get' })
         		},
         		phone: {
 					onDisconnect: function(event) {
@@ -227,6 +228,10 @@
 				headers: [{
 				           name:"x-username",
 				           value: settings.username
+				         },
+						{
+				           name:"x-myusername",
+				           value: settings.myusername
 				         }],
             	onAnswer: function(event) {	
 				    phoneBtn.text("CLICK TO HANGUP");

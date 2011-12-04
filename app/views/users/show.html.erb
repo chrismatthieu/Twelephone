@@ -12,7 +12,11 @@
 	<% content_for :stylers do  -%>
 	<style>
 		body {
-			background: url(<%=@user.backgroundurl%>) 0px 0 no-repeat;
+			<% if @user.backgroundtile %>
+				background: url(<%=@user.backgroundurl%>) 0px 0 repeat;
+			<% else %>
+				background: url(<%=@user.backgroundurl%>) 0px 0 no-repeat;
+			<% end %>
 			background-color: #<%=@user.backgroundcolor%>;
 		}
 	

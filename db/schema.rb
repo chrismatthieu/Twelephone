@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111028042653) do
+ActiveRecord::Schema.define(:version => 20111204165516) do
 
   create_table "users", :force => true do |t|
     t.string   "username"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20111028042653) do
     t.string   "bio"
     t.string   "location"
     t.string   "url"
+    t.boolean  "backgroundtile"
   end
 
 end

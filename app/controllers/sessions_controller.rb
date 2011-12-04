@@ -57,6 +57,7 @@ class SessionsController < ApplicationController
         omniauth['credentials']['secret'] ? @authhash[:secret] = omniauth['credentials']['secret'] : @authhash[:secret] = ''        
         omniauth['extra']['user_hash']['profile_background_image_url'] ? @authhash[:backgroundimage] =  omniauth['extra']['user_hash']['profile_background_image_url'] : @authhash[:backgroundimage] = ''
         omniauth['extra']['user_hash']['profile_background_color'] ? @authhash[:backgroundcolor] =  omniauth['extra']['user_hash']['profile_background_color'] : @authhash[:backgroundcolor] = ''
+        omniauth['extra']['user_hash']['profile_background_tile'] ? @authhash[:backgroundtile] =  omniauth['extra']['user_hash']['profile_background_tile'] : @authhash[:backgroundtile] = ''
         omniauth['extra']['user_hash']['description'] ? @authhash[:bio] =  omniauth['extra']['user_hash']['description'] : @authhash[:bio] = ''
         omniauth['extra']['user_hash']['location'] ? @authhash[:location] =  omniauth['extra']['user_hash']['location'] : @authhash[:location] = ''
         omniauth['extra']['user_hash']['url'] ? @authhash[:url] =  omniauth['extra']['user_hash']['url'] : @authhash[:url] = ''
@@ -108,6 +109,7 @@ class SessionsController < ApplicationController
           @user.access_secret = @authhash[:secret]  
           @user.backgroundurl = @authhash[:backgroundimage]  
           @user.backgroundcolor = @authhash[:backgroundcolor]  
+          @user.backgroundtile = @authhash[:backgroundtile]  
           @user.bio = @authhash[:bio]  
           @user.bio = @authhash[:location]  
           @user.bio = @authhash[:url]  

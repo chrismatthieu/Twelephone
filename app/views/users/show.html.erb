@@ -33,19 +33,19 @@
 	      buttonTextReady: "CLICK TO CALL",
 	      username: "<%=@username%>",
 	      myusername: "<%=@current_user.username%>",
-	      slideOpen:false,
+		  myphoto: "<%=@current_user.photo%>",
+	      slideOpen:true,
 	      dialPad: false
 	    })
 	  )
 	 </script>
 	</center>
 
+	
 	<center>
-		<div><br/>
-		   <a href="https://twitter.com/share" class="twitter-share-button"	data-count="none"
-			      data-text="Join me now on a social twelephone call!">Tweet</a>
+		<div id="attendees">
 		</div>
-	</center>	
+	</center>
 
 
 <% else %>
@@ -86,3 +86,6 @@
 		</div>
 	<% end %>
 <% end %>
+
+<audio id="audio_new_pm" src="/audio/new_pm.mp3" preload="auto"></audio>
+<audio id="audio_msg" src="/audio/sound.mp3" preload="auto"></audio>

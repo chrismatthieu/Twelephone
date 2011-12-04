@@ -2,7 +2,11 @@
 	
 	$.fn.callme = function( options ) {
 	
-		var thisPhone = this, dispatcher = $({}), callMeOptions = {}, phono, call; 
+	// 	test = app:9996101245
+	// 	prod = app:9996162282
+	
+		var thisPhone = this, dispatcher = $({}), callMeOptions = {}, phono, call, mysession;
+		var attendees = {"data" : []}
 		var settings = {
 			apikey : "",
 			dialpad: true,
@@ -62,6 +66,7 @@
       				(this.checked)? call.mute(true): call.mute(false);
       			}
       		});
+
       		
       		dispatcher.bind({
       			// phono is ready, bind events to the call button
@@ -83,6 +88,7 @@
         		apiKey: settings.apikey,
         		onReady: function(){
         			dispatcher.trigger("phonoReady");
+					mysession = this.sessionId;
 					$.ajax({ url: '/api/update_phonoaddress', data: { 'mysession': this.sessionId}, type: 'get' })
         		},
         		phone: {
@@ -93,12 +99,68 @@
 				messaging: {
 				    onMessage: function(event) {
 				       var message = event.message;
-				       alert("Message from: " + message.from + "\n" + message.body);
+						// message is formatted as username:photourl:jid:status (joined, dropped, etc.)
+						
+						var body = message.body
+						var split = body.split('~');
+						var datausername = split[0];
+						var dataphotourl = split[1];
+						var datajid = split[2];
+						var datastatus = split[3];
+						
+						// alert("Message from: " + message.from + "\n" + datausername + "-" + dataphotourl + "-" + datajid + "-" + datastatus );
+				       // alert("Message from: " + message.from + "\n" + message.body );											 
+						
+						if(datastatus == 'joined'){
+							// 	attendees.data.push({"username" : datausername,"photo" : dataphotourl, "jid" : datajid})
+							
+							// Add Avatar of new attendee to organizer's page
+							$("#attendees").append('<div id="' + datausername + '"><img src="' + dataphotourl + '" width="50" height="50"align="left" ></div>');
+							
+							// Add Mute link/checkbox next to avatar
+							$("#" + datausername).append('<div id="' + datausername + 'mute"><input class="phono-user-mute-' + datausername + '" type="checkbox"> mute</div>');
+
+							$('.phono-user-mute-' + datausername).bind('click', function() {
+								phono.messaging.send( datajid, datausername + '~photo~' + datajid + '~mute');
+							});
+
+							// Add Hangup link/checkbox next to avatar
+							$("#" + datausername).append('<div id="' + datausername + 'hangup"><input class="phono-user-hangup-' + datausername + '" type="checkbox"> hangup</div><br/>');
+
+							$('.phono-user-hangup-' + datausername).bind('click', function() {
+								phono.messaging.send( datajid, datausername + '~photo~' + datajid + '~hangup');
+							});
+
+																		      		
+							// Play sound when new attendee joins conference
+							try { $("#audio_new_pm")[0].play(); } catch(e) {}
+							// try { $("#audio_msg")[0].play(); } catch(e) {}
+						}
+						if(datastatus == 'left'){
+							// 	// attendees.data.pop({"username" : datausername,"photo" : dataphotourl, "jid" : datajid})
+							$("#" + datausername).remove();
+							try { $("#audio_msg")[0].play(); } catch(e) {}
+						}
+						if(datastatus == 'mute'){
+							call.mute(true);
+						}
+						if(datastatus == 'unmute'){
+							call.mute(false);
+						}
+						if(datastatus == 'hangup'){
+							call.hangup();
+						}
+				
 				    }
 				  }
       		});
     		
     	});
+
+		// function muteAttendee( username, jid ){
+		// 	// phono.messaging.send( jid, username + '~photo~' + jid + '~mute');
+		// 	alert('test');
+		// };
     	
     	function buildPhone( settings ){
     		var phoneHldr = $( "<div/>")
@@ -129,7 +191,7 @@
     					"font-size":"75%",
     					"text-align":"center"
     				})
-    				.html("<input class='phono-mic-toggle' type='checkbox'/> Wearing a headset?")
+    				.html("<input class='phono-mic-toggle' type='checkbox'/><img src='/assets/headphones.png' width='32'> Wearing a headset?")
     				.appendTo(phoneContent);
     				
     			if(settings.slideopen)
@@ -144,7 +206,7 @@
     					"font-size":"75%",
     					"text-align":"center"
     				})
-    				.html("<input class='phono-mute-toggle' type='checkbox'/> Mute?")
+    				.html("<input class='phono-mute-toggle' type='checkbox'/><img src='/assets/microphone.png' width='32'> Mute?")
     				.appendTo(phoneContent);
     				
     			if(settings.slideopen)
@@ -238,15 +300,28 @@
 						{
 				           name:"x-myusername",
 				           value: settings.myusername
+				         },
+						{
+				           name:"x-myphoto",
+				           value: settings.myphoto
+				         },
+						{
+				           name:"x-myjid",
+				           value: mysession
 				         }],
             	onAnswer: function(event) {	
 				    phoneBtn.text("CLICK TO HANGUP");
             	},
             	onHangup: function() {
 				    hangUpCall(settings, phone);
+					$("#attendees").empty();
+					try { $("#audio_msg")[0].play(); } catch(e) {}
+					
             	},
             	onDisconnect: function() {
 				    hangUpCall(settings, phone);						
+					$("#attendees").empty();
+					try { $("#audio_msg")[0].play(); } catch(e) {}
             	}
         	});
     	}
@@ -269,3 +344,8 @@
 	};
 	
 })( jQuery );
+
+// function muteAttendee( username, jid ){
+// 	$.phono.messaging.send( jid, username + '~photo~' + jid + '~mute');
+// 	// alert('test');
+// };

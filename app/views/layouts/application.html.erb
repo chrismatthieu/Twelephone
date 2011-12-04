@@ -66,7 +66,10 @@
 			<% end %>
 			<%= link_to @current_user.username.capitalize, "/" + @current_user.username  %> | 		
 			<%= link_to 'Logout', '/logout' %><br/>
-			<%#button_to_function "Launch Dialpad", "popitup('/telephone')" %>
+			<%= button_to_function "Dialpad", "popitup('/telephone')", :class => "telephone_button" %>
+			<a href="https://twitter.com/share" class="twitter-share-button"	data-count="none"
+					      data-text="Join me now on a social twelephone call!">Tweet</a>
+			
 		<% else %>
 			<a href="/auth/twitter"><%= image_tag "twitter_login.png" %></a>
 		<% end %>

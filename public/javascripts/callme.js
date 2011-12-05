@@ -121,7 +121,7 @@
 							$("#" + datausername).append('<div id="' + datausername + 'mute"><input class="phono-user-mute-' + datausername + '" type="checkbox"> mute</div>');
 
 							$('.phono-user-mute-' + datausername).bind('click', function() {
-								phono.messaging.send( datajid, datausername + '~photo~' + datajid + '~mute');
+								(this.checked)? phono.messaging.send( datajid, datausername + '~photo~' + datajid + '~mute'): phono.messaging.send( datajid, datausername + '~photo~' + datajid + '~unmute');
 							});
 
 							// Add Hangup link/checkbox next to avatar
@@ -142,9 +142,11 @@
 							try { $("#audio_msg")[0].play(); } catch(e) {}
 						}
 						if(datastatus == 'mute'){
+							$(".phono-mute-toggle-hldr").remove();							
 							call.mute(true);
 						}
 						if(datastatus == 'unmute'){
+							$(".phono-mute-toggle-hldr").remove();							
 							call.mute(false);
 						}
 						if(datastatus == 'hangup'){

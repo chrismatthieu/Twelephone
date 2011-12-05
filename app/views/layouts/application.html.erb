@@ -65,7 +65,7 @@
 				<%= gravatar_image_tag @current_user.email, :class => "gravatar", :width => "50" rescue ""%> 
 			<% end %>
 			<%= link_to @current_user.username.capitalize, "/" + @current_user.username  %> | 		
-			<%= link_to 'Logout', '/logout' %><br/>
+			<%= link_to 'Logout', '/logout' %><br/><br/>
 			<%= button_to_function "Dialpad", "popitup('/telephone')", :class => "telephone_button" %>
 			<a href="https://twitter.com/share" class="twitter-share-button"	data-count="none"
 					      data-text="Join me now on a social twelephone call!">Tweet</a>
